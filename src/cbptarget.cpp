@@ -23,7 +23,7 @@
 #include "cbhelper.h"
 #include "stlconvert.h"
 #include "stlfutils.h"
-#include "tinyxml.h"
+#include "tinyxml2.h"
 //------------------------------------------------------------------------------
 
 CBuildTarget::CBuildTarget(void)

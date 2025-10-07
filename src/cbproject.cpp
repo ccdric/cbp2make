@@ -29,7 +29,7 @@
 #include "stlconvert.h"
 #include "stlfutils.h"
 #include "depsearch.h"
-#include "tinyxml.h"
+#include "tinyxml2.h"
 //------------------------------------------------------------------------------
 
 CCodeBlocksProject::CCodeBlocksProject(void)

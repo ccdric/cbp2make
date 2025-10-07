@@ -25,7 +25,7 @@
 #include "cbbuildcfg.h"
 #include "cbhelper.h"
 #include "stlfutils.h"
-#include "tinyxml.h"
+#include "tinyxml2.h"
 //------------------------------------------------------------------------------
 
 CWorkspaceUnit::CWorkspaceUnit(void)

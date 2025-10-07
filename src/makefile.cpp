@@ -22,7 +22,7 @@
 #include "tinyxml.h"
 #include "stlconvert.h"
 #include "cbhelper.h"
-#include "makefile.h"
+#include "makefile2.h"
 //------------------------------------------------------------------------------
 
 

@@ -4,7 +4,7 @@ Uploaders: Steffen Moeller <moeller@debian.org>
 Section: devel
 Priority: optional
 Build-Depends: debhelper-compat (= 13),
-               libtinyxml-dev
+               libtinyxml2-dev
 #Build-Depends-Indep: doxygen
 Standards-Version: 4.5.0
 Rules-Requires-Root: no

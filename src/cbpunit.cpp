@@ -24,7 +24,7 @@
 #include "cbhelper.h"
 #include "stlconvert.h"
 #include "stlfutils.h"
-#include "tinyxml.h"
+#include "tinyxml2.h"
 //------------------------------------------------------------------------------
 
 CBuildUnit::CBuildUnit(void)
