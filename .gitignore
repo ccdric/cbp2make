@@ -1,3 +1,4 @@
+.*
 !.gitignore
 bin
 obj
@@ -10,3 +11,8 @@ tmp
 *_build_log.html
 build_*.txt
 Makefile
+*.log
+debian/cbp2make
+debian/cbp2make.substvars
+debian/files
+debian/debhelper-build-stamp

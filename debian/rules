@@ -1,0 +1,26 @@
+#!/usr/bin/make -f
+# -*- makefile -*-
+
+# Uncomment this to turn on verbose mode.
+#export DH_VERBOSE=1
+
+# Set default flags with dpkg-buildflags
+export DEB_BUILD_MAINT_OPTIONS = hardening=+all
+DPKG_EXPORT_BUILDFLAGS = 1
+include /usr/share/dpkg/buildflags.mk
+CFLAGS += $(CPPFLAGS)
+
+%:
+	dh $@ --buildsystem=makefile
+
+override_dh_auto_build-arch:
+	ln -sf cbp2make.cbp.mak.unix Makefile
+	dh_auto_build -- release 'LD=$$(CXX)'
+
+#build-indep:
+#	ln -sf cbp2make.cbp.mak.unix Makefile
+#	$(MAKE) doxygen
+
+override_dh_clean:
+	rm -f Makefile
+	dh_clean

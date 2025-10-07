@@ -1,0 +1,82 @@
+diff --git a/cbp2make.cbp b/cbp2make.cbp
+index 9f33204..3407a5d 100644
+--- a/cbp2make.cbp
++++ b/cbp2make.cbp
+@@ -51,7 +51,7 @@
+ 			</Target>
+ 		</Build>
+ 		<VirtualTargets>
+-			<Add alias="All" targets="Debug;Release;" />
++			<Add alias="All" targets="Release;" />
+ 		</VirtualTargets>
+ 		<Compiler>
+ 			<Add option="-Wall" />
+@@ -59,9 +59,11 @@
+ 			<Add option="-fno-strict-aliasing" />
+ 			<Add option="-Wno-write-strings" />
+ 			<Add directory="lib" />
+-			<Add directory="lib/tinyxml" />
+ 			<Add directory="src" />
+ 		</Compiler>
++		<Linker>
++			<Add library="tinyxml" />
++		</Linker>
+ 		<Unit filename="lib/doc/macros.dox">
+ 			<Option target="Doxygen" />
+ 		</Unit>
+@@ -143,36 +145,6 @@
+ 			<Option target="Release" />
+ 			<Option target="Profile" />
+ 		</Unit>
+-		<Unit filename="lib/tinyxml/tinystr.cpp">
+-			<Option target="Debug" />
+-			<Option target="Release" />
+-			<Option target="Profile" />
+-		</Unit>
+-		<Unit filename="lib/tinyxml/tinystr.h">
+-			<Option target="Debug" />
+-			<Option target="Release" />
+-			<Option target="Profile" />
+-		</Unit>
+-		<Unit filename="lib/tinyxml/tinyxml.cpp">
+-			<Option target="Debug" />
+-			<Option target="Release" />
+-			<Option target="Profile" />
+-		</Unit>
+-		<Unit filename="lib/tinyxml/tinyxml.h">
+-			<Option target="Debug" />
+-			<Option target="Release" />
+-			<Option target="Profile" />
+-		</Unit>
+-		<Unit filename="lib/tinyxml/tinyxmlerror.cpp">
+-			<Option target="Debug" />
+-			<Option target="Release" />
+-			<Option target="Profile" />
+-		</Unit>
+-		<Unit filename="lib/tinyxml/tinyxmlparser.cpp">
+-			<Option target="Debug" />
+-			<Option target="Release" />
+-			<Option target="Profile" />
+-		</Unit>
+ 		<Unit filename="src/buildtools.cpp">
+ 			<Option target="Debug" />
+ 			<Option target="Release" />
+@@ -347,10 +319,6 @@
+ 			<Option target="Profile" />
+ 		</Unit>
+ 		<Extensions>
+-			<envvars />
+-			<code_completion />
+-			<debugger />
+-			<lib_finder disable_auto="1" />
+ 			<DoxyBlocks>
+ 				<comment_style block="0" line="0" />
+ 				<doxyfile_project />
+@@ -360,6 +328,7 @@
+ 				<doxyfile_dot />
+ 				<general />
+ 			</DoxyBlocks>
++			<lib_finder disable_auto="1" />
+ 		</Extensions>
+ 	</Project>
+ </CodeBlocks_project_file>

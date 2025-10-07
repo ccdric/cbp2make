@@ -1,0 +1,228 @@
+diff --git a/cbp2make.cbp.mak.unix b/cbp2make.cbp.mak.unix
+index 3152dfd..a4b3d42 100644
+--- a/cbp2make.cbp.mak.unix
++++ b/cbp2make.cbp.mak.unix
+@@ -79,10 +79,6 @@ OBJ_DEBUG = $(OBJDIR_DEBUG)/src/cbp2make.o \
+ 	$(OBJDIR_DEBUG)/lib/stlstrings.o \
+ 	$(OBJDIR_DEBUG)/lib/stlvariables.o \
+ 	$(OBJDIR_DEBUG)/lib/stringhash.o \
+-	$(OBJDIR_DEBUG)/lib/tinyxml/tinystr.o \
+-	$(OBJDIR_DEBUG)/lib/tinyxml/tinyxml.o \
+-	$(OBJDIR_DEBUG)/lib/tinyxml/tinyxmlerror.o \
+-	$(OBJDIR_DEBUG)/lib/tinyxml/tinyxmlparser.o \
+ 	$(OBJDIR_DEBUG)/src/buildtools.o \
+ 	$(OBJDIR_DEBUG)/src/cbbuildcfg.o \
+ 	$(OBJDIR_DEBUG)/src/cbbuildmgr.o \
+@@ -127,10 +123,6 @@ OBJ_PROFILE = $(OBJDIR_PROFILE)/src/cbp2make.o \
+ 	$(OBJDIR_PROFILE)/lib/stlstrings.o \
+ 	$(OBJDIR_PROFILE)/lib/stlvariables.o \
+ 	$(OBJDIR_PROFILE)/lib/stringhash.o \
+-	$(OBJDIR_PROFILE)/lib/tinyxml/tinystr.o \
+-	$(OBJDIR_PROFILE)/lib/tinyxml/tinyxml.o \
+-	$(OBJDIR_PROFILE)/lib/tinyxml/tinyxmlerror.o \
+-	$(OBJDIR_PROFILE)/lib/tinyxml/tinyxmlparser.o \
+ 	$(OBJDIR_PROFILE)/src/buildtools.o \
+ 	$(OBJDIR_PROFILE)/src/cbbuildcfg.o \
+ 	$(OBJDIR_PROFILE)/src/cbbuildmgr.o \
+@@ -144,7 +136,6 @@ before_debug:
+ 	test -d bin/Debug || mkdir -p bin/Debug
+ 	test -d $(OBJDIR_DEBUG)/src || mkdir -p $(OBJDIR_DEBUG)/src
+ 	test -d $(OBJDIR_DEBUG)/lib || mkdir -p $(OBJDIR_DEBUG)/lib
+-	test -d $(OBJDIR_DEBUG)/lib/tinyxml || mkdir -p $(OBJDIR_DEBUG)/lib/tinyxml
+ 
+ after_debug: 
+ 
+@@ -204,18 +195,6 @@ $(OBJDIR_DEBUG)/lib/stlvariables.o: lib/stlvariables.cpp
+ $(OBJDIR_DEBUG)/lib/stringhash.o: lib/stringhash.cpp
+ 	$(CXX) $(CFLAGS_DEBUG) $(INC_DEBUG) -c lib/stringhash.cpp -o $(OBJDIR_DEBUG)/lib/stringhash.o
+ 
+-$(OBJDIR_DEBUG)/lib/tinyxml/tinystr.o: lib/tinyxml/tinystr.cpp
+-	$(CXX) $(CFLAGS_DEBUG) $(INC_DEBUG) -c lib/tinyxml/tinystr.cpp -o $(OBJDIR_DEBUG)/lib/tinyxml/tinystr.o
+-
+-$(OBJDIR_DEBUG)/lib/tinyxml/tinyxml.o: lib/tinyxml/tinyxml.cpp
+-	$(CXX) $(CFLAGS_DEBUG) $(INC_DEBUG) -c lib/tinyxml/tinyxml.cpp -o $(OBJDIR_DEBUG)/lib/tinyxml/tinyxml.o
+-
+-$(OBJDIR_DEBUG)/lib/tinyxml/tinyxmlerror.o: lib/tinyxml/tinyxmlerror.cpp
+-	$(CXX) $(CFLAGS_DEBUG) $(INC_DEBUG) -c lib/tinyxml/tinyxmlerror.cpp -o $(OBJDIR_DEBUG)/lib/tinyxml/tinyxmlerror.o
+-
+-$(OBJDIR_DEBUG)/lib/tinyxml/tinyxmlparser.o: lib/tinyxml/tinyxmlparser.cpp
+-	$(CXX) $(CFLAGS_DEBUG) $(INC_DEBUG) -c lib/tinyxml/tinyxmlparser.cpp -o $(OBJDIR_DEBUG)/lib/tinyxml/tinyxmlparser.o
+-
+ $(OBJDIR_DEBUG)/src/buildtools.o: src/buildtools.cpp
+ 	$(CXX) $(CFLAGS_DEBUG) $(INC_DEBUG) -c src/buildtools.cpp -o $(OBJDIR_DEBUG)/src/buildtools.o
+ 
+@@ -233,13 +212,11 @@ clean_debug:
+ 	rm -rf bin/Debug
+ 	rm -rf $(OBJDIR_DEBUG)/src
+ 	rm -rf $(OBJDIR_DEBUG)/lib
+-	rm -rf $(OBJDIR_DEBUG)/lib/tinyxml
+ 
+ before_release: 
+ 	test -d bin/Release || mkdir -p bin/Release
+ 	test -d $(OBJDIR_RELEASE)/src || mkdir -p $(OBJDIR_RELEASE)/src
+ 	test -d $(OBJDIR_RELEASE)/lib || mkdir -p $(OBJDIR_RELEASE)/lib
+-	test -d $(OBJDIR_RELEASE)/lib/tinyxml || mkdir -p $(OBJDIR_RELEASE)/lib/tinyxml
+ 
+ after_release: 
+ 
+@@ -299,18 +276,6 @@ $(OBJDIR_RELEASE)/lib/stlvariables.o: lib/stlvariables.cpp
+ $(OBJDIR_RELEASE)/lib/stringhash.o: lib/stringhash.cpp
+ 	$(CXX) $(CFLAGS_RELEASE) $(INC_RELEASE) -c lib/stringhash.cpp -o $(OBJDIR_RELEASE)/lib/stringhash.o
+ 
+-$(OBJDIR_RELEASE)/lib/tinyxml/tinystr.o: lib/tinyxml/tinystr.cpp
+-	$(CXX) $(CFLAGS_RELEASE) $(INC_RELEASE) -c lib/tinyxml/tinystr.cpp -o $(OBJDIR_RELEASE)/lib/tinyxml/tinystr.o
+-
+-$(OBJDIR_RELEASE)/lib/tinyxml/tinyxml.o: lib/tinyxml/tinyxml.cpp
+-	$(CXX) $(CFLAGS_RELEASE) $(INC_RELEASE) -c lib/tinyxml/tinyxml.cpp -o $(OBJDIR_RELEASE)/lib/tinyxml/tinyxml.o
+-
+-$(OBJDIR_RELEASE)/lib/tinyxml/tinyxmlerror.o: lib/tinyxml/tinyxmlerror.cpp
+-	$(CXX) $(CFLAGS_RELEASE) $(INC_RELEASE) -c lib/tinyxml/tinyxmlerror.cpp -o $(OBJDIR_RELEASE)/lib/tinyxml/tinyxmlerror.o
+-
+-$(OBJDIR_RELEASE)/lib/tinyxml/tinyxmlparser.o: lib/tinyxml/tinyxmlparser.cpp
+-	$(CXX) $(CFLAGS_RELEASE) $(INC_RELEASE) -c lib/tinyxml/tinyxmlparser.cpp -o $(OBJDIR_RELEASE)/lib/tinyxml/tinyxmlparser.o
+-
+ $(OBJDIR_RELEASE)/src/buildtools.o: src/buildtools.cpp
+ 	$(CXX) $(CFLAGS_RELEASE) $(INC_RELEASE) -c src/buildtools.cpp -o $(OBJDIR_RELEASE)/src/buildtools.o
+ 
+@@ -328,7 +293,6 @@ clean_release:
+ 	rm -rf bin/Release
+ 	rm -rf $(OBJDIR_RELEASE)/src
+ 	rm -rf $(OBJDIR_RELEASE)/lib
+-	rm -rf $(OBJDIR_RELEASE)/lib/tinyxml
+ 
+ before_doxygen: 
+ 	doxygen Doxyfile
+@@ -341,7 +305,6 @@ before_profile:
+ 	test -d bin/Profile || mkdir -p bin/Profile
+ 	test -d $(OBJDIR_PROFILE)/src || mkdir -p $(OBJDIR_PROFILE)/src
+ 	test -d $(OBJDIR_PROFILE)/lib || mkdir -p $(OBJDIR_PROFILE)/lib
+-	test -d $(OBJDIR_PROFILE)/lib/tinyxml || mkdir -p $(OBJDIR_PROFILE)/lib/tinyxml
+ 
+ after_profile: 
+ 
+@@ -401,18 +364,6 @@ $(OBJDIR_PROFILE)/lib/stlvariables.o: lib/stlvariables.cpp
+ $(OBJDIR_PROFILE)/lib/stringhash.o: lib/stringhash.cpp
+ 	$(CXX) $(CFLAGS_PROFILE) $(INC_PROFILE) -c lib/stringhash.cpp -o $(OBJDIR_PROFILE)/lib/stringhash.o
+ 
+-$(OBJDIR_PROFILE)/lib/tinyxml/tinystr.o: lib/tinyxml/tinystr.cpp
+-	$(CXX) $(CFLAGS_PROFILE) $(INC_PROFILE) -c lib/tinyxml/tinystr.cpp -o $(OBJDIR_PROFILE)/lib/tinyxml/tinystr.o
+-
+-$(OBJDIR_PROFILE)/lib/tinyxml/tinyxml.o: lib/tinyxml/tinyxml.cpp
+-	$(CXX) $(CFLAGS_PROFILE) $(INC_PROFILE) -c lib/tinyxml/tinyxml.cpp -o $(OBJDIR_PROFILE)/lib/tinyxml/tinyxml.o
+-
+-$(OBJDIR_PROFILE)/lib/tinyxml/tinyxmlerror.o: lib/tinyxml/tinyxmlerror.cpp
+-	$(CXX) $(CFLAGS_PROFILE) $(INC_PROFILE) -c lib/tinyxml/tinyxmlerror.cpp -o $(OBJDIR_PROFILE)/lib/tinyxml/tinyxmlerror.o
+-
+-$(OBJDIR_PROFILE)/lib/tinyxml/tinyxmlparser.o: lib/tinyxml/tinyxmlparser.cpp
+-	$(CXX) $(CFLAGS_PROFILE) $(INC_PROFILE) -c lib/tinyxml/tinyxmlparser.cpp -o $(OBJDIR_PROFILE)/lib/tinyxml/tinyxmlparser.o
+-
+ $(OBJDIR_PROFILE)/src/buildtools.o: src/buildtools.cpp
+ 	$(CXX) $(CFLAGS_PROFILE) $(INC_PROFILE) -c src/buildtools.cpp -o $(OBJDIR_PROFILE)/src/buildtools.o
+ 
+@@ -430,7 +381,6 @@ clean_profile:
+ 	rm -rf bin/Profile
+ 	rm -rf $(OBJDIR_PROFILE)/src
+ 	rm -rf $(OBJDIR_PROFILE)/lib
+-	rm -rf $(OBJDIR_PROFILE)/lib/tinyxml
+ 
+ all: debug release
+ 
+@@ -505,8 +455,7 @@ src/cbproject.cpp: src/revision.h \
+ 	src/cbhelper.h \
+ 	lib/stlconvert.h \
+ 	lib/stlfutils.h \
+-	src/depsearch.h \
+-	lib/tinyxml/tinyxml.h
++	src/depsearch.h
+ 
+ src/cbptarget.h: lib/stlstrings.h \
+ 	src/platforms.h
+@@ -514,28 +463,23 @@ src/cbptarget.h: lib/stlstrings.h \
+ src/cbpunit.h: lib/stlstrings.h \
+ 	src/cbptarget.h
+ 
+-lib/tinyxml/tinyxml.h: lib/tinyxml/tinystr.h
+-
+ src/cbptarget.cpp: src/cbptarget.h \
+ 	src/cbhelper.h \
+ 	lib/stlconvert.h \
+-	lib/stlfutils.h \
+-	lib/tinyxml/tinyxml.h
++	lib/stlfutils.h
+ 
+ src/cbpunit.cpp: lib/macros.h \
+ 	src/cbpunit.h \
+ 	src/cbhelper.h \
+ 	lib/stlconvert.h \
+-	lib/stlfutils.h \
+-	lib/tinyxml/tinyxml.h
++	lib/stlfutils.h
+ 
+ src/cbworkspace.cpp: src/revision.h \
+ 	lib/macros.h \
+ 	src/cbworkspace.h \
+ 	src/cbbuildcfg.h \
+ 	src/cbhelper.h \
+-	lib/stlfutils.h \
+-	lib/tinyxml/tinyxml.h
++	lib/stlfutils.h
+ 
+ src/depsearch.cpp: src/cbhelper.h \
+ 	lib/stlfutils.h \
+@@ -543,19 +487,16 @@ src/depsearch.cpp: src/cbhelper.h \
+ 
+ src/cbhelper.cpp: src/cbhelper.h
+ 
+-src/makefile.cpp: lib/tinyxml/tinyxml.h \
+-	lib/stlconvert.h \
++src/makefile.cpp: lib/stlconvert.h \
+ 	src/cbhelper.h \
+ 	src/makefile.h
+ 
+ src/platforms.cpp: src/platforms.h \
+ 	lib/stlconvert.h \
+-	lib/stlfutils.h \
+-	lib/tinyxml/tinyxml.h
++	lib/stlfutils.h
+ 
+ src/toolchains.cpp: src/toolchains.h \
+-	lib/stlconvert.h \
+-	lib/tinyxml/tinyxml.h
++	lib/stlconvert.h
+ 
+ lib/stlconfig.cpp: lib/stlstrings.h \
+ 	lib/stlconfig.h
+@@ -574,29 +515,17 @@ lib/stlvariables.cpp: lib/stlvariables.h
+ 
+ lib/stringhash.cpp: lib/stringhash.h
+ 
+-lib/tinyxml/tinystr.cpp: lib/tinyxml/tinystr.h
+-
+-lib/tinyxml/tinyxml.cpp: lib/tinyxml/tinyxml.h
+-
+-lib/tinyxml/tinyxmlerror.cpp: lib/tinyxml/tinyxml.h
+-
+-lib/tinyxml/tinyxmlparser.cpp: lib/tinyxml/tinyxml.h
+-
+ src/buildtools.cpp: src/buildtools.h \
+ 	lib/stlconvert.h \
+-	src/cbhelper.h \
+-	lib/tinyxml/tinyxml.h
++	src/cbhelper.h
+ 
+ src/cbbuildcfg.cpp: src/cbbuildcfg.h \
+-	lib/stlconvert.h \
+-	lib/tinyxml/tinyxml.h
++	lib/stlconvert.h
+ 
+ src/cbbuildmgr.cpp: lib/stlfutils.h \
+-	src/cbbuildmgr.h \
+-	lib/tinyxml/tinyxml.h
++	src/cbbuildmgr.h
+ 
+-src/cbglobalvar.cpp: lib/tinyxml/tinyxml.h \
+-	lib/stlfutils.h \
++src/cbglobalvar.cpp: lib/stlfutils.h \
+ 	src/cbglobalvar.h \
+ 	src/cbhelper.h
+ 

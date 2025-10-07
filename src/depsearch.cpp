@@ -697,7 +697,7 @@ CCppIncludeSearchFilter::~CCppIncludeSearchFilter(void)
  //
 }
 
-void CCppIncludeSearchFilter::Assign(const CCppIncludeSearchFilter& Filter)
+void CCppIncludeSearchFilter::Assign(const CIncludeSearchFilter& Filter)
 {
  //
 }

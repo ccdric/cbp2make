@@ -1,0 +1,11 @@
+Document: cbp2make
+Title: Doxygen documentation for cbp2make
+Author: Mirai Computing <mirai.computing@gmail.com>
+Abstract:
+  Auto-generated documentation from the source
+  tree of cbp2make
+Section: Programming
+
+Format: HTML
+Index: /usr/share/doc/cbp2make-doc/html/index.html
+Files: /usr/share/doc/cbp2make-doc/html/*.html

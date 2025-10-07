@@ -1,0 +1,6 @@
+cbp2make for Debian
+-------------------
+
+Quick attempt a first package as a build dependency to other packages.
+
+ -- Steffen Moeller <moeller@debian.org>  Sun, 16 Feb 2014 04:03:14 +0100

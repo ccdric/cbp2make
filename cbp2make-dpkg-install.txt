@@ -1,0 +1,4 @@
+dpkg-buildpackage -b -rfakeroot -us -uc
+cd ..
+sudo dpkg -i cbp2make_160+dfsg-1_amd64.deb
+cbp2make --version

@@ -1,0 +1,60 @@
+cbp2make (160+dfsg-1) unstable; urgency=medium
+
+  * Team upload
+
+  [ Cedric Castanet ]
+  * §Update to rev #160
+
+ -- Creédric Castanet <cedric.castanet@debian.org>  Mon, 6 Oct 2025 16:02:00 +0000
+
+cbp2make (147+dfsg-4) unstable; urgency=medium
+
+  * Team upload
+
+  [ Helmut Grohne ]
+  * Fix FTCBFS: Let dh_auto_build pass cross tools to make and pass LD
+    explicitly. (Closes: #969121)
+
+  [ Graham Inggs ]
+  * Switch to debhelper 13
+  * Add CPPFLAGS hardening flags to CFLAGS
+
+ -- Graham Inggs <ginggs@debian.org>  Fri, 28 Aug 2020 08:05:54 +0000
+
+cbp2make (147+dfsg-3) unstable; urgency=medium
+
+  * Team upload
+
+  [ Jelmer Vernooĳ ]
+  * Use secure copyright file specification URI.
+  * Trim trailing whitespace.
+
+  [ Graham Inggs ]
+  * Rename build-arch to override_dh_auto_build-arch,
+    thanks Niels Thykier (Closes: #956372)
+  * Switch to debhelper 12
+  * Set Rules-Requires-Root: no
+  * Set Vcs-Browser to canonical URI
+  * Bump Standards-Version to 4.5.0, no changes
+
+ -- Graham Inggs <ginggs@debian.org>  Thu, 16 Apr 2020 09:35:31 +0000
+
+cbp2make (147+dfsg-2) unstable; urgency=medium
+
+  * Team upload.
+  * Moved packaging from SVN to Git
+  * cme fix dpkg-control
+  * Fixed Homepage
+  * debhelper 11
+  * Standards-Version: 4.1.3
+
+ -- Andreas Tille <tille@debian.org>  Wed, 24 Jan 2018 11:46:31 +0100
+
+cbp2make (147+dfsg-1) unstable; urgency=low
+
+  * An Ubuntu PPA already offered something partially reusable,
+    no ITP issued.
+
+    The FTP masters is thanked for their initial review.
+
+ -- Steffen Moeller <moeller@debian.org>  Sun, 16 Feb 2014 04:03:14 +0100

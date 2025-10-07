@@ -1,0 +1,22 @@
+Source: cbp2make
+Maintainer: Debian Science Team <debian-science-maintainers@lists.alioth.debian.org>
+Uploaders: Steffen Moeller <moeller@debian.org>
+Section: devel
+Priority: optional
+Build-Depends: debhelper-compat (= 13),
+               libtinyxml-dev
+#Build-Depends-Indep: doxygen
+Standards-Version: 4.5.0
+Rules-Requires-Root: no
+Vcs-Browser: https://salsa.debian.org/science-team/cbp2make
+Vcs-Git: https://salsa.debian.org/science-team/cbp2make.git
+Homepage: https://sourceforge.net/projects/cbp2make/
+
+Package: cbp2make
+Architecture: any
+Depends: ${shlibs:Depends},
+         ${misc:Depends}
+Description: Makefile generation tool for the Code::Blocks IDE
+ cbp2make is a stand-alone build tool that allows you
+ to generate makefile(s) for GNU Make out of Code::Blocks
+ IDE project or workspace files.

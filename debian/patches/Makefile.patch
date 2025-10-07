@@ -1,0 +1,46 @@
+--- a/cbp2make.cbp.mak.unix
++++ b/cbp2make.cbp.mak.unix
+@@ -11,13 +11,13 @@ AR = ar
+ LD = g++
+ WINDRES = windres
+ 
+-INC = -Ilib -Ilib/tinyxml -Isrc
+-CFLAGS = -Wall -fexceptions -fno-strict-aliasing -Wno-write-strings
+-RCFLAGS = 
+-RESINC = 
+-LIBDIR = 
+-LIB = 
+-LDFLAGS = 
++INC += -Ilib -Isrc
++CFLAGS += -Wall -fexceptions -fno-strict-aliasing -Wno-write-strings
++RCFLAGS += 
++RESINC += 
++LIBDIR += 
++LIB += -ltinyxml
++LDFLAGS += 
+ 
+ INC_DEBUG = $(INC)
+ CFLAGS_DEBUG = $(CFLAGS) -g
+@@ -105,10 +105,6 @@ OBJ_RELEASE = $(OBJDIR_RELEASE)/src/cbp2make.o \
+ 	$(OBJDIR_RELEASE)/lib/stlstrings.o \
+ 	$(OBJDIR_RELEASE)/lib/stlvariables.o \
+ 	$(OBJDIR_RELEASE)/lib/stringhash.o \
+-	$(OBJDIR_RELEASE)/lib/tinyxml/tinystr.o \
+-	$(OBJDIR_RELEASE)/lib/tinyxml/tinyxml.o \
+-	$(OBJDIR_RELEASE)/lib/tinyxml/tinyxmlerror.o \
+-	$(OBJDIR_RELEASE)/lib/tinyxml/tinyxmlparser.o \
+ 	$(OBJDIR_RELEASE)/src/buildtools.o \
+ 	$(OBJDIR_RELEASE)/src/cbbuildcfg.o \
+ 	$(OBJDIR_RELEASE)/src/cbbuildmgr.o \
+@@ -604,5 +600,10 @@ src/cbglobalvar.cpp: lib/tinyxml/tinyxml.h \
+ 	src/cbglobalvar.h \
+ 	src/cbhelper.h
+ 
+-.PHONY: before_debug after_debug clean_debug before_release after_release clean_release before_doxygen after_doxygen before_profile after_profile clean_profile
++PREFIX=usr/
++install:
++	mkdir -p $(DESTDIR)/$(PREFIX)/bin
++	cp bin/Release/* $(DESTDIR)/$(PREFIX)/bin
++
++.PHONY: before_debug after_debug clean_debug before_release after_release clean_release before_doxygen after_doxygen before_profile after_profile clean_profile install
+ 
