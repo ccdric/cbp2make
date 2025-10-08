@@ -337,12 +337,12 @@ void CPlatform::Reset(const CPlatform::OS_Type OS)
  }
 }
 
-void CPlatform::Read(const TiXmlElement *Root, const CString& Name, CString& Value)
+void CPlatform::Read(const Xml::XMLElement *Root, const CString& Name, CString& Value)
 {
- TiXmlNode *_command = (TiXmlNode *)Root->FirstChildElement("command");
+ Xml::XMLNode *_command = (Xml::XMLNode *)Root->FirstChildElement("command");
  while (0!=_command)
  {
-  TiXmlElement* command = _command->ToElement();
+  Xml::XMLElement* command = _command->ToElement();
   //if (strcmp(command->Value(),"command")!=0) break;
   if (0!=command)
   {
@@ -356,7 +356,7 @@ void CPlatform::Read(const TiXmlElement *Root, const CString& Name, CString& Val
  } // command
 }
 
-void CPlatform::Read(const TiXmlElement *PlatformRoot)
+void CPlatform::Read(const Xml::XMLElement *PlatformRoot)
 {
  char *value = 0;
  if ((value = (char *)PlatformRoot->Attribute("name")))
@@ -420,14 +420,13 @@ void CPlatform::Read(const TiXmlElement *PlatformRoot)
 	//Read(PlatformRoot,"",m_);
 }
 
-void CPlatform::Write(TiXmlElement *Root, const CString& Name, const CString& Value)
+void CPlatform::Write(Xml::XMLElement *Root, const CString& Name, const CString& Value)
 {
-	TiXmlElement *command = Root->InsertNewChildElement("command");
+	Xml::XMLElement *command = Root->InsertNewChildElement("command");
 	command->SetAttribute(Name.GetCString(),Value.GetCString());
-//	Root->LinkEndChild(command);
 }
 
-void CPlatform::Write(TiXmlElement *PlatformRoot)
+void CPlatform::Write(Xml::XMLElement *PlatformRoot)
 {
 	PlatformRoot->SetAttribute("name",Name().GetCString());
 	PlatformRoot->SetAttribute("path_delimiter",CString(m_PathDelimiter).GetCString());
@@ -582,12 +581,12 @@ void CPlatformSet::Remove(const CString& Platform)
 }
 */
 
-void CPlatformSet::Read(const TiXmlElement *ConfigRoot)
+void CPlatformSet::Read(const Xml::XMLElement *ConfigRoot)
 {
- TiXmlNode *_platform = (TiXmlNode *)ConfigRoot->FirstChildElement("platform");
+ Xml::XMLNode *_platform = (Xml::XMLNode *)ConfigRoot->FirstChildElement("platform");
  while (0!=_platform)
  {
-  TiXmlElement* platform = _platform->ToElement();
+  Xml::XMLElement* platform = _platform->ToElement();
   if (strcmp(platform->Value(),"platform")!=0) break;
   if (0!=platform)
   {
@@ -599,14 +598,13 @@ void CPlatformSet::Read(const TiXmlElement *ConfigRoot)
  } // platform
 }
 
-void CPlatformSet::Write(TiXmlElement *ConfigRoot)
+void CPlatformSet::Write(Xml::XMLElement *ConfigRoot)
 {
 	for (int i = 0, n = m_Platforms.size(); i < n; i++)
 	{
 	 CPlatform *p = m_Platforms[i];
-	 TiXmlElement *p_root = ConfigRoot->InsertNewChildElement("platform");
+	 Xml::XMLElement *p_root = ConfigRoot->InsertNewChildElement("platform");
 	 p->Write(p_root);
-//	 ConfigRoot->LinkEndChild(p_root);
 	}
 }
 

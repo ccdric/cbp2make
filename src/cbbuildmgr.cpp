@@ -44,11 +44,11 @@ void CCodeBlocksBuildManager::Clear(void)
 bool CCodeBlocksBuildManager::LoadProjectOrWorkspace(const CString& FileName)
 {
  bool result = false;
- TiXmlDocument cbpw;
+ Xml::XMLDocument cbpw;
  result = cbpw.LoadFile(FileName.GetCString());
  if (!result) return false;
  Clear();
- const TiXmlElement *root = cbpw.RootElement();
+ const Xml::XMLElement *root = cbpw.RootElement();
  if (0==strcmp(root->Value(),"CodeBlocks_project_file"))
  {
   m_Project.Read(root);

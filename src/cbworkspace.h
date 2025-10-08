@@ -42,7 +42,7 @@ class CWorkspaceUnit
   int m_Weight;
  public:
   void Clear(void);
-  void Read(const TiXmlElement* UnitRoot);
+  void Read(const Xml::XMLElement* UnitRoot);
   void Show(void);
   bool LoadProject(const CString& WorkspacePath);
  public:
@@ -67,7 +67,7 @@ class CCodeBlocksWorkspace
   void SortProjectsByWeight(void);
  public:
   void Clear(void);
-  void Read(const TiXmlElement* WorkspaceRoot);
+  void Read(const Xml::XMLElement* WorkspaceRoot);
   bool LoadWorkspaceProjects(const CString& WorkspacePath);
   bool LoadWorkspace(const CString& FileName);
   void Show(const bool ShowProjects = false);

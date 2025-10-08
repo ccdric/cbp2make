@@ -52,7 +52,7 @@ class CBuildUnit
   int Weight(void) const { return m_Weight; }
  public:
   void Clear(void);
-  void Read(const TiXmlElement *UnitRoot);
+  void Read(const Xml::XMLElement *UnitRoot);
   void Show(void);
  public:
   CBuildUnit(void);

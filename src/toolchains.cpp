@@ -192,12 +192,12 @@ bool CToolChain::Supports(const CPlatform::OS_Type OS) const
          (CPlatform::OS_Mac==OS));
 }
 
-void CToolChain::Read(const TiXmlElement *Root, const CString& Name, CString& Value)
+void CToolChain::Read(const Xml::XMLElement *Root, const CString& Name, CString& Value)
 {
- TiXmlNode *_option = (TiXmlNode *)Root->FirstChildElement("option");
+ Xml::XMLNode *_option = (Xml::XMLNode *)Root->FirstChildElement("option");
  while (0!=_option)
  {
-  TiXmlElement* option = _option->ToElement();
+  Xml::XMLElement* option = _option->ToElement();
   //if (strcmp(option->Value(),"option")!=0) break;
   if (0!=option)
   {
@@ -212,14 +212,14 @@ void CToolChain::Read(const TiXmlElement *Root, const CString& Name, CString& Va
  } // option
 }
 
-void CToolChain::Read(const TiXmlElement *Root, const CString& Name, bool& Value)
+void CToolChain::Read(const Xml::XMLElement *Root, const CString& Name, bool& Value)
 {
  CString value;
  Read(Root,Name,value);
  Value = StringToBoolean(value);
 }
 
-void CToolChain::Read(const TiXmlElement *ToolChainRoot)
+void CToolChain::Read(const Xml::XMLElement *ToolChainRoot)
 {
  char *value = 0;
  if ((value = (char *)ToolChainRoot->Attribute("alias")))
@@ -237,10 +237,10 @@ void CToolChain::Read(const TiXmlElement *ToolChainRoot)
   m_ = value;
  }
  */
- TiXmlNode *_tool_root = (TiXmlNode *)(ToolChainRoot->FirstChildElement("tool"));
+ Xml::XMLNode *_tool_root = (Xml::XMLNode *)(ToolChainRoot->FirstChildElement("tool"));
  while (0!=_tool_root)
  {
-  const TiXmlElement *tool_root = _tool_root->ToElement();
+  const Xml::XMLElement *tool_root = _tool_root->ToElement();
   if (0!=tool_root)
   {
    char *value = 0; CString type_name, alias;
@@ -285,21 +285,19 @@ void CToolChain::Read(const TiXmlElement *ToolChainRoot)
  }
 }
 
-void CToolChain::Write(TiXmlElement *Root, const CString& Name, const CString& Value)
+void CToolChain::Write(Xml::XMLElement *Root, const CString& Name, const CString& Value)
 {
-	TiXmlElement *option = Root->InsertNewChildElement("option");
+	Xml::XMLElement *option = Root->InsertNewChildElement("option");
 	option->SetAttribute(Name.GetCString(),Value.GetCString());
-//	Root->LinkEndChild(option);
 }
 
-void CToolChain::Write(TiXmlElement *Root, const CString& Name, const bool Value)
+void CToolChain::Write(Xml::XMLElement *Root, const CString& Name, const bool Value)
 {
-	TiXmlElement *option = Root->InsertNewChildElement("option");
+	Xml::XMLElement *option = Root->InsertNewChildElement("option");
 	option->SetAttribute(Name.GetCString(),Value);
-//	Root->LinkEndChild(option);
 }
 
-void CToolChain::Write(TiXmlElement *ToolChainRoot)
+void CToolChain::Write(Xml::XMLElement *ToolChainRoot)
 {
  ToolChainRoot->SetAttribute("platform",CPlatform::Name(m_Platform).GetCString());
 	ToolChainRoot->SetAttribute("alias",m_Alias.GetCString());
@@ -314,9 +312,8 @@ void CToolChain::Write(TiXmlElement *ToolChainRoot)
   CBuildTool *bt = m_BuildTools[i];
   if (bt->Supports(m_Platform))
 	 {
-	  TiXmlElement *bt_root = ToolChainRoot->InsertNewChildElement("tool");
+	  Xml::XMLElement *bt_root = ToolChainRoot->InsertNewChildElement("tool");
    bt->Write(bt_root);
-//   ToolChainRoot->LinkEndChild(bt_root);
 	 }
  }
 }
@@ -770,12 +767,12 @@ void CToolChainSet::Remove(const CPlatform::OS_Type OS, const CString& Alias)
  }
 }
 
-void CToolChainSet::Read(const TiXmlElement *ConfigRoot)
+void CToolChainSet::Read(const Xml::XMLElement *ConfigRoot)
 {
- TiXmlNode *_tool_chain = (TiXmlNode *)ConfigRoot->FirstChildElement("toolchain");
+ Xml::XMLNode *_tool_chain = (Xml::XMLNode *)ConfigRoot->FirstChildElement("toolchain");
  while (0!=_tool_chain)
  {
-  TiXmlElement* tool_chain = _tool_chain->ToElement();
+  Xml::XMLElement* tool_chain = _tool_chain->ToElement();
   if (0!=tool_chain)
   {
    if (strcmp(tool_chain->Value(),"toolchain")!=0) break;
@@ -811,16 +808,15 @@ void CToolChainSet::Read(const TiXmlElement *ConfigRoot)
  } // tool_chain
 }
 
-void CToolChainSet::Write(TiXmlElement *ConfigRoot)
+void CToolChainSet::Write(Xml::XMLElement *ConfigRoot)
 {
 	for (int i = 0, n = m_ToolChains.size(); i < n; i++)
 	{
  	for (int j = 0, m = m_ToolChains[i].size(); j < m; j++)
   {
  	 CToolChain *tc = m_ToolChains[i][j];
- 	 TiXmlElement *tc_root = ConfigRoot->InsertNewChildElement("toolchain");
+ 	 Xml::XMLElement *tc_root = ConfigRoot->InsertNewChildElement("toolchain");
 	  tc->Write(tc_root);
-//	  ConfigRoot->LinkEndChild(tc_root);
   }
 	}
 }

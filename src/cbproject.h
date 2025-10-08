@@ -79,7 +79,7 @@ class CCodeBlocksProject
   void SortUnitsByWeight(void);
  public:
   void Clear(void);
-  void Read(const TiXmlElement *ProjectRoot);
+  void Read(const Xml::XMLElement *ProjectRoot);
   bool LoadProject(const CString& FileName);
   void Show(void);
  private:

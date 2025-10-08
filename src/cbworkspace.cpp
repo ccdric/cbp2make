@@ -45,13 +45,13 @@ void CWorkspaceUnit::Clear(void)
  m_Weight = 0;
 }
 
-void CWorkspaceUnit::Read(const TiXmlElement* UnitRoot)
+void CWorkspaceUnit::Read(const Xml::XMLElement* UnitRoot)
 {
  m_FileName = UnitRoot->Attribute("filename");
- const TiXmlNode *_depends = UnitRoot->FirstChildElement("Depends");
+ const Xml::XMLNode *_depends = UnitRoot->FirstChildElement("Depends");
  while (0!=_depends)
  {
-  const TiXmlElement *depends = _depends->ToElement();
+  const Xml::XMLElement *depends = _depends->ToElement();
   if (0!=depends)
   {
    char *value = (char *)depends->Attribute("filename");
@@ -166,19 +166,19 @@ void CCodeBlocksWorkspace::Clear()
  m_Makefile.Clear();
 }
 
-void CCodeBlocksWorkspace::Read(const TiXmlElement* WorkspaceRoot)
+void CCodeBlocksWorkspace::Read(const Xml::XMLElement* WorkspaceRoot)
 {
- const TiXmlNode *_workspace = WorkspaceRoot->FirstChildElement("Workspace");
+ const Xml::XMLNode *_workspace = WorkspaceRoot->FirstChildElement("Workspace");
  if (0!=_workspace)
  {
-  const TiXmlElement *workspace = _workspace->ToElement();
+  const Xml::XMLElement *workspace = _workspace->ToElement();
   if (0!=workspace)
   {
    m_Title = workspace->Attribute("title");
-   TiXmlNode *_project = (TiXmlNode *)_workspace->FirstChildElement("Project");
+   Xml::XMLNode *_project = (Xml::XMLNode *)_workspace->FirstChildElement("Project");
    while (0!=_project)
    {
-    TiXmlElement* project = _project->ToElement();
+    Xml::XMLElement* project = _project->ToElement();
     if (0!=project)
     {
      CWorkspaceUnit *unit = new CWorkspaceUnit();
@@ -192,11 +192,11 @@ void CCodeBlocksWorkspace::Read(const TiXmlElement* WorkspaceRoot)
 bool CCodeBlocksWorkspace::LoadWorkspace(const CString& FileName)
 {
  bool result = false;
- TiXmlDocument cbw;
+ Xml::XMLDocument cbw;
  result = cbw.LoadFile(FileName.GetCString());
  if (!result) return false;
  Clear();
- const TiXmlElement *root = cbw.RootElement();
+ const Xml::XMLElement *root = cbw.RootElement();
  if (0==strcmp(root->Value(),"CodeBlocks_workspace_file"))
  {
   Read(root);

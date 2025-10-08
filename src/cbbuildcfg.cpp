@@ -62,42 +62,42 @@ bool CCodeBlocksBuildConfig::Load(const CString& FileName)
  m_ToolChains.AddDefault();
  m_GlobalVariables.AddDefault();
  //
- TiXmlDocument cfg;
+ Xml::XMLDocument cfg;
  if (!cfg.LoadFile(FileName.GetCString())) return false;
- const TiXmlElement *root = cfg.RootElement();
+ const Xml::XMLElement *root = cfg.RootElement();
  if (0==strcmp(root->Value(),"cbp2make"))
  {
-  const TiXmlNode *_platforms = root->FirstChildElement("platforms");
+  const Xml::XMLNode *_platforms = root->FirstChildElement("platforms");
   if (0!=_platforms)
   {
-   const TiXmlElement *platforms = _platforms->ToElement();
+   const Xml::XMLElement *platforms = _platforms->ToElement();
    if (0!=platforms)
    {
     m_Platforms.Read(platforms);
    }
   }
-  const TiXmlNode *_toolchains = root->FirstChildElement("toolchains");
+  const Xml::XMLNode *_toolchains = root->FirstChildElement("toolchains");
   if (0!=_toolchains)
   {
-   const TiXmlElement *toolchains = _toolchains->ToElement();
+   const Xml::XMLElement *toolchains = _toolchains->ToElement();
    if (0!=toolchains)
    {
     m_ToolChains.Read(toolchains);
    }
   }
-  const TiXmlNode *_globvars = root->FirstChildElement("globalvariables");
+  const Xml::XMLNode *_globvars = root->FirstChildElement("globalvariables");
   if (0!=_globvars)
   {
-   const TiXmlElement *globvars = _globvars->ToElement();
+   const Xml::XMLElement *globvars = _globvars->ToElement();
    if (0!=globvars)
    {
     m_GlobalVariables.Read(globvars);
    }
   }
-  const TiXmlNode *_options = root->FirstChildElement("options");
+  const Xml::XMLNode *_options = root->FirstChildElement("options");
   if (0!=_options)
   {
-   const TiXmlElement *options = _options->ToElement();
+   const Xml::XMLElement *options = _options->ToElement();
    if (0!=options)
    {
     char *value = 0;
@@ -116,22 +116,16 @@ bool CCodeBlocksBuildConfig::Save(const CString& FileName)
  m_ToolChains.AddDefault();
  m_GlobalVariables.AddDefault();
  //
- TiXmlDocument cfg;
+ Xml::XMLDocument cfg;
  cfg.NewDeclaration();
-//	cfg.LinkEndChild(xmld);
-	TiXmlElement *root = cfg.NewElement("cbp2make");
-//	cfg.LinkEndChild(root);
-	TiXmlElement *platforms = root->InsertNewChildElement("platforms");
-//	root->LinkEndChild(platforms);
+	Xml::XMLElement *root = cfg.NewElement("cbp2make");
+	Xml::XMLElement *platforms = root->InsertNewChildElement("platforms");
  m_Platforms.Write(platforms);
-	TiXmlElement *toolchains = root->InsertNewChildElement("toolchains");
-//	root->LinkEndChild(toolchains);
+	Xml::XMLElement *toolchains = root->InsertNewChildElement("toolchains");
  m_ToolChains.Write(toolchains);
-	TiXmlElement *globvars = root->InsertNewChildElement("globalvariables");
-//	root->LinkEndChild(globvars);
+	Xml::XMLElement *globvars = root->InsertNewChildElement("globalvariables");
  m_GlobalVariables.Write(globvars);
- TiXmlElement *options = root->InsertNewChildElement("options");
-// root->LinkEndChild(options);
+ Xml::XMLElement *options = root->InsertNewChildElement("options");
  options->SetAttribute("default",m_DefaultOptions.GetCString());
  return cfg.SaveFile(FileName.GetCString());
 }

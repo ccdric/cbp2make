@@ -170,12 +170,12 @@ bool CBuildTool::Supports(const CPlatform::OS_Type OS)
           (CPlatform::OS_Mac==OS));
 }
 
-void CBuildTool::Read(const TiXmlElement *Root, const CString& Name, CString& Value)
+void CBuildTool::Read(const Xml::XMLElement *Root, const CString& Name, CString& Value)
 {
- TiXmlNode *_option = (TiXmlNode *)Root->FirstChildElement("option");
+ Xml::XMLNode *_option = (Xml::XMLNode *)Root->FirstChildElement("option");
  while (0!=_option)
  {
-  TiXmlElement* option = _option->ToElement();
+  Xml::XMLElement* option = _option->ToElement();
   //if (strcmp(option->Value(),"option")!=0) break;
   if (0!=option)
   {
@@ -190,14 +190,14 @@ void CBuildTool::Read(const TiXmlElement *Root, const CString& Name, CString& Va
  } // option
 }
 
-void CBuildTool::Read(const TiXmlElement *Root, const CString& Name, bool& Value)
+void CBuildTool::Read(const Xml::XMLElement *Root, const CString& Name, bool& Value)
 {
  CString value;
  Read(Root,Name,value);
  Value = StringToBoolean(value);
 }
 
-void CBuildTool::Read(const TiXmlElement *BuildToolRoot)
+void CBuildTool::Read(const Xml::XMLElement *BuildToolRoot)
 {
  char *value = 0; CString type_name;
  if ((value = (char *)BuildToolRoot->Attribute("type")))
@@ -229,25 +229,23 @@ void CBuildTool::Read(const TiXmlElement *BuildToolRoot)
 	Read(BuildToolRoot, "need_unix_path", m_NeedUnixPath);
 }
 
-void CBuildTool::Write(TiXmlElement *Root, const CString& Name, const CString& Value)
+void CBuildTool::Write(Xml::XMLElement *Root, const CString& Name, const CString& Value)
 {
     // old tiny1
 //	TiXmlElement *option = new TiXmlElement("option");
 //	option->SetAttribute(Name.GetCString(),Value.GetCString());
-//	Root->LinkEndChild(option);
 	// refacto tiny2
-	TiXmlElement *option = Root->InsertNewChildElement("option");
+	Xml::XMLElement *option = Root->InsertNewChildElement("option");
 	option->SetAttribute(Name.GetCString(),Value.GetCString());
 }
 
-void CBuildTool::Write(TiXmlElement *Root, const CString& Name, const bool Value)
+void CBuildTool::Write(Xml::XMLElement *Root, const CString& Name, const bool Value)
 {
-	TiXmlElement *option = Root->InsertNewChildElement("option");
+	Xml::XMLElement *option = Root->InsertNewChildElement("option");
 	option->SetAttribute(Name.GetCString(),Value);
-//	Root->LinkEndChild(option);
 }
 
-void CBuildTool::Write(TiXmlElement *BuildToolRoot)
+void CBuildTool::Write(Xml::XMLElement *BuildToolRoot)
 {
  BuildToolRoot->SetAttribute("type",XMLFriendly(TypeName()).GetCString());
  BuildToolRoot->SetAttribute("alias",m_Alias.GetCString());
@@ -305,7 +303,7 @@ CPreprocessor *CPreprocessor::CreateInstance(void)
  return new CPreprocessor(*this);
 }
 
-void CPreprocessor::Read(const TiXmlElement *BuildToolRoot)
+void CPreprocessor::Read(const Xml::XMLElement *BuildToolRoot)
 {
  CBuildTool::Read(BuildToolRoot);
 	CBuildTool::Read(BuildToolRoot, "include_dir_switch", m_IncludeDirSwitch);
@@ -313,7 +311,7 @@ void CPreprocessor::Read(const TiXmlElement *BuildToolRoot)
 	//Read(BuildToolRoot, "", m_);
 }
 
-void CPreprocessor::Write(TiXmlElement *BuildToolRoot)
+void CPreprocessor::Write(Xml::XMLElement *BuildToolRoot)
 {
  CBuildTool::Write(BuildToolRoot);
 	CBuildTool::Write(BuildToolRoot, "include_dir_switch", m_IncludeDirSwitch);
@@ -355,7 +353,7 @@ CCompiler *CCompiler::CreateInstance(void)
  return new CCompiler(*this);
 }
 
-void CCompiler::Read(const TiXmlElement *BuildToolRoot)
+void CCompiler::Read(const Xml::XMLElement *BuildToolRoot)
 {
  CBuildTool::Read(BuildToolRoot);
 	CBuildTool::Read(BuildToolRoot, "include_dir_switch", m_IncludeDirSwitch);
@@ -363,7 +361,7 @@ void CCompiler::Read(const TiXmlElement *BuildToolRoot)
 	//Read(BuildToolRoot, "", m_);
 }
 
-void CCompiler::Write(TiXmlElement *BuildToolRoot)
+void CCompiler::Write(Xml::XMLElement *BuildToolRoot)
 {
  CBuildTool::Write(BuildToolRoot);
 	CBuildTool::Write(BuildToolRoot, "include_dir_switch", m_IncludeDirSwitch);
@@ -459,7 +457,7 @@ CLinker *CLinker::CreateInstance(void)
  return new CLinker(*this);
 }
 
-void CLinker::Read(const TiXmlElement *BuildToolRoot)
+void CLinker::Read(const Xml::XMLElement *BuildToolRoot)
 {
  CBuildTool::Read(BuildToolRoot);
  CBuildTool::Read(BuildToolRoot, "library_dir_switch", m_LibraryDirSwitch);
@@ -473,7 +471,7 @@ void CLinker::Read(const TiXmlElement *BuildToolRoot)
 	//Read(BuildToolRoot, "", m_);
 }
 
-void CLinker::Write(TiXmlElement *BuildToolRoot)
+void CLinker::Write(Xml::XMLElement *BuildToolRoot)
 {
  CBuildTool::Write(BuildToolRoot);
  CBuildTool::Write(BuildToolRoot, "library_dir_switch", m_LibraryDirSwitch);
@@ -596,14 +594,14 @@ CExecutableLinker *CExecutableLinker::CreateInstance(void)
  return new CExecutableLinker(*this);
 }
 
-void CExecutableLinker::Read(const TiXmlElement *BuildToolRoot)
+void CExecutableLinker::Read(const Xml::XMLElement *BuildToolRoot)
 {
  CLinker::Read(BuildToolRoot);
  CBuildTool::Read(BuildToolRoot, "option_wingui", m_Option_WinGUI);
 	//Read(BuildToolRoot, "", m_);
 }
 
-void CExecutableLinker::Write(TiXmlElement *BuildToolRoot)
+void CExecutableLinker::Write(Xml::XMLElement *BuildToolRoot)
 {
  CLinker::Write(BuildToolRoot);
  CBuildTool::Write(BuildToolRoot, "option_wingui", m_Option_WinGUI);
@@ -638,13 +636,13 @@ CDependencyGenerator *CDependencyGenerator::CreateInstance(void)
  return new CDependencyGenerator(*this);
 }
 
-void CDependencyGenerator::Read(const TiXmlElement *BuildToolRoot)
+void CDependencyGenerator::Read(const Xml::XMLElement *BuildToolRoot)
 {
  CBuildTool::Read(BuildToolRoot);
 	//Read(BuildToolRoot, "", m_);
 }
 
-void CDependencyGenerator::Write(TiXmlElement *BuildToolRoot)
+void CDependencyGenerator::Write(Xml::XMLElement *BuildToolRoot)
 {
  CBuildTool::Write(BuildToolRoot);
 	//Write(BuildToolRoot, "", m_);
@@ -677,13 +675,13 @@ CBuildManager *CBuildManager::CreateInstance(void)
  return new CBuildManager(*this);
 }
 
-void CBuildManager::Read(const TiXmlElement *BuildToolRoot)
+void CBuildManager::Read(const Xml::XMLElement *BuildToolRoot)
 {
  CBuildTool::Read(BuildToolRoot);
 	//Read(BuildToolRoot, "", m_);
 }
 
-void CBuildManager::Write(TiXmlElement *BuildToolRoot)
+void CBuildManager::Write(Xml::XMLElement *BuildToolRoot)
 {
  CBuildTool::Write(BuildToolRoot);
 	//Write(BuildToolRoot, "", m_);

@@ -129,7 +129,7 @@ class CBuildTarget
   CString ExtDeps(void);
  public:
   void Clear(void);
-  void Read(const TiXmlElement *TargetRoot);
+  void Read(const Xml::XMLElement *TargetRoot);
   void Show(void);
  public:
   CBuildTarget(void);
@@ -158,7 +158,7 @@ class CVirtualTarget
   CString Name(const CString& Prefix, const int TargetIndex) const;
   //
   void Clear(void);
-  void Read(const TiXmlElement *TargetRoot);
+  void Read(const Xml::XMLElement *TargetRoot);
   void Show(void);
  public:
   CVirtualTarget(void);

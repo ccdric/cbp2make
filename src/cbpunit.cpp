@@ -56,17 +56,17 @@ bool CBuildUnit::BelongToTarget(const CString& TargetName)
  return ((m_Targets.GetCount()==0) || (m_Targets.FindString(TargetName)>=0));
 }
 
-void CBuildUnit::Read(const TiXmlElement *UnitRoot)
+void CBuildUnit::Read(const Xml::XMLElement *UnitRoot)
 {
  char *value = 0;
  if ((value = (char *)UnitRoot->Attribute("filename")))
  {
   m_FileName = value;
  }
- TiXmlNode *_option = (TiXmlNode *)UnitRoot->FirstChildElement("Option");
+ Xml::XMLNode *_option = (Xml::XMLNode *)UnitRoot->FirstChildElement("Option");
  while (0!=_option)
  {
-  TiXmlElement* option = _option->ToElement();
+  Xml::XMLElement* option = _option->ToElement();
   if (0!=option)
   {
    char *value = 0;

@@ -59,8 +59,8 @@ class CGlobalVariable
   void Clear(void);
   void Add(const CString& Name, const CString& Value);
   void Remove(const CString& Name);
-  void Read(const TiXmlElement *GlobalVariableRoot);
-  void Write(TiXmlElement *GlobalVariableRoot);
+  void Read(const Xml::XMLElement *GlobalVariableRoot);
+  void Write(Xml::XMLElement *GlobalVariableRoot);
   void Show(void);
  public:
   CGlobalVariable(void);
@@ -84,8 +84,8 @@ class CGlobalVariableSet
   CGlobalVariable *Find(const CString& Name);
   CGlobalVariable *Add(const CString& Name, const CString& Description = "");
   void Remove(const CString& Name);
-  void Read(const TiXmlElement *GlobalVariableSetRoot);
-  void Write(TiXmlElement *GlobalVariableSetRoot);
+  void Read(const Xml::XMLElement *GlobalVariableSetRoot);
+  void Write(Xml::XMLElement *GlobalVariableSetRoot);
   void Show(void);
  public:
   CGlobalVariableSet(void);
@@ -105,8 +105,8 @@ class CGlobalVariableConfig
   CGlobalVariableSet *Add(const CString& Name);
   void AddDefault(void);
   void Remove(const CString& Name);
-  void Read(const TiXmlElement *GlobalVariableConfigRoot);
-  void Write(TiXmlElement *GlobalVariableConfigRoot);
+  void Read(const Xml::XMLElement *GlobalVariableConfigRoot);
+  void Write(Xml::XMLElement *GlobalVariableConfigRoot);
   void Show(void);
  public:
   CGlobalVariableConfig(void);

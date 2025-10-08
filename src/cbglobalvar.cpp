@@ -202,7 +202,7 @@ void CGlobalVariable::Remove(const CString& Name)
  m_Fields.RemoveVariable(Name);
 }
 
-void CGlobalVariable::Read(const TiXmlElement *GlobalVariableRoot)
+void CGlobalVariable::Read(const Xml::XMLElement *GlobalVariableRoot)
 {
  char *value = 0;
  if ((value = (char *)GlobalVariableRoot->Attribute("name")))
@@ -213,10 +213,10 @@ void CGlobalVariable::Read(const TiXmlElement *GlobalVariableRoot)
  {
   m_Description = value;
  }
- const TiXmlNode *_built_in = GlobalVariableRoot->FirstChildElement("builtin");
+ const Xml::XMLNode *_built_in = GlobalVariableRoot->FirstChildElement("builtin");
  if (0!=_built_in)
  {
-  TiXmlElement *built_in = (TiXmlElement *)_built_in->ToElement();
+  Xml::XMLElement *built_in = (Xml::XMLElement *)_built_in->ToElement();
   if (0!=built_in)
   {
    if ((value = (char *)built_in->Attribute("base")))
@@ -251,16 +251,16 @@ void CGlobalVariable::Read(const TiXmlElement *GlobalVariableRoot)
    */
   } // built_in
  } // _built_in
- const TiXmlNode *_user = GlobalVariableRoot->FirstChildElement("user");
+ const Xml::XMLNode *_user = GlobalVariableRoot->FirstChildElement("user");
  if (0!=_user)
  {
-  TiXmlElement *user = (TiXmlElement *)_user->ToElement();
+  Xml::XMLElement *user = (Xml::XMLElement *)_user->ToElement();
   if (0!=user)
   {
-   TiXmlNode *_field = user->FirstChildElement("field");
+   Xml::XMLNode *_field = user->FirstChildElement("field");
    while (0!=_field)
    {
-    TiXmlElement *field = (TiXmlElement *)_field->ToElement();
+    Xml::XMLElement *field = (Xml::XMLElement *)_field->ToElement();
     if (0!=field)
     {
      CString field_name, field_value;
@@ -287,11 +287,11 @@ void CGlobalVariable::Read(const TiXmlElement *GlobalVariableRoot)
  } // _user
 }
 
-void CGlobalVariable::Write(TiXmlElement *GlobalVariableRoot)
+void CGlobalVariable::Write(Xml::XMLElement *GlobalVariableRoot)
 {
  GlobalVariableRoot->SetAttribute("name",m_Name.GetCString());
  GlobalVariableRoot->SetAttribute("description",m_Description.GetCString());
-	TiXmlElement *built_in = GlobalVariableRoot->InsertNewChildElement("builtin");
+	Xml::XMLElement *built_in = GlobalVariableRoot->InsertNewChildElement("builtin");
 	//built_in->SetAttribute("name",m_Name.GetCString());
 	built_in->SetAttribute("base",m_Base.GetCString());
 	built_in->SetAttribute("include",m_Include.GetCString());
@@ -300,16 +300,13 @@ void CGlobalVariable::Write(TiXmlElement *GlobalVariableRoot)
 	built_in->SetAttribute("cflags",m_Cflags.GetCString());
 	built_in->SetAttribute("lflags",m_Lflags.GetCString());
 	//built_in->SetAttribute("",m_.GetCString());
-// GlobalVariableRoot->LinkEndChild(built_in);
- TiXmlElement *fields = GlobalVariableRoot->InsertNewChildElement("user");
-// GlobalVariableRoot->LinkEndChild(fields);
+ Xml::XMLElement *fields = GlobalVariableRoot->InsertNewChildElement("user");
  for (int i = 0, n = m_Fields.GetCount(); i < n; i++)
  {
   CVariable& v = m_Fields.Variable(i);
-  TiXmlElement *field = fields->InsertNewChildElement("field");
+  Xml::XMLElement *field = fields->InsertNewChildElement("field");
   field->SetAttribute("name",v.GetName().GetCString());
   field->SetAttribute("value",v.GetString().GetCString());
-//  fields->LinkEndChild(field);
  }
 }
 
@@ -398,17 +395,17 @@ void CGlobalVariableSet::Remove(const CString& Name)
  }
 }
 
-void CGlobalVariableSet::Read(const TiXmlElement *GlobalVariableSetRoot)
+void CGlobalVariableSet::Read(const Xml::XMLElement *GlobalVariableSetRoot)
 {
  char *value = 0;
  if ((value = (char *)GlobalVariableSetRoot->Attribute("name")))
  {
   m_Name = value;
  }
- TiXmlNode *_v_root = (TiXmlNode *)GlobalVariableSetRoot->FirstChildElement("variable");
+ Xml::XMLNode *_v_root = (Xml::XMLNode *)GlobalVariableSetRoot->FirstChildElement("variable");
  while (0!=_v_root)
  {
-  TiXmlElement *v_root = _v_root->ToElement();
+  Xml::XMLElement *v_root = _v_root->ToElement();
   if (0!=v_root)
   {
    CGlobalVariable *v = new CGlobalVariable();
@@ -419,16 +416,15 @@ void CGlobalVariableSet::Read(const TiXmlElement *GlobalVariableSetRoot)
  }
 }
 
-void CGlobalVariableSet::Write(TiXmlElement *GlobalVariableSetRoot)
+void CGlobalVariableSet::Write(Xml::XMLElement *GlobalVariableSetRoot)
 {
  GlobalVariableSetRoot->SetAttribute("name",m_Name.GetCString());
 	for (size_t i = 0, n = m_Variables.size(); i < n; i++)
 	{
 	 CGlobalVariable *v = m_Variables[i];
-	 TiXmlElement *v_root = GlobalVariableSetRoot->InsertNewChildElement("variable");
+	 Xml::XMLElement *v_root = GlobalVariableSetRoot->InsertNewChildElement("variable");
 	 v_root->SetAttribute("name",m_Name.GetCString());
 	 v->Write(v_root);
-//	 GlobalVariableSetRoot->LinkEndChild(v_root);
 	}
 }
 
@@ -517,12 +513,12 @@ void CGlobalVariableConfig::Remove(const CString& Name)
  }
 }
 
-void CGlobalVariableConfig::Read(const TiXmlElement *GlobalVariableConfigRoot)
+void CGlobalVariableConfig::Read(const Xml::XMLElement *GlobalVariableConfigRoot)
 {
- TiXmlNode *_vset_root = (TiXmlNode *)GlobalVariableConfigRoot->FirstChildElement("variableset");
+ Xml::XMLNode *_vset_root = (Xml::XMLNode *)GlobalVariableConfigRoot->FirstChildElement("variableset");
  while (0!=_vset_root)
  {
-  TiXmlElement *vset_root = _vset_root->ToElement();
+  Xml::XMLElement *vset_root = _vset_root->ToElement();
   if (0!=vset_root)
   {
    char *value = 0; CString name;
@@ -547,14 +543,13 @@ void CGlobalVariableConfig::Read(const TiXmlElement *GlobalVariableConfigRoot)
  AddDefault();
 }
 
-void CGlobalVariableConfig::Write(TiXmlElement *GlobalVariableConfigRoot)
+void CGlobalVariableConfig::Write(Xml::XMLElement *GlobalVariableConfigRoot)
 {
 	for (size_t i = 0, n = m_VariableSets.size(); i < n; i++)
 	{
 	 CGlobalVariableSet *vset = m_VariableSets[i];
-	 TiXmlElement *vset_root = GlobalVariableConfigRoot->InsertNewChildElement("variableset");
+	 Xml::XMLElement *vset_root = GlobalVariableConfigRoot->InsertNewChildElement("variableset");
 	 vset->Write(vset_root);
-//	 GlobalVariableConfigRoot->LinkEndChild(vset_root);
 	}
 }
 

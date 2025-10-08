@@ -59,10 +59,10 @@ class CToolChain
   void RemoveTool(const CBuildTool* BuildTool, std::vector<CBuildTool *>& Tools);
   void RemoveTool(const CBuildTool* BuildTool);
  protected:
-  void Read(const TiXmlElement *Root, const CString& Name, CString& Value);
-  void Read(const TiXmlElement *Root, const CString& Name, bool& Value);
-  void Write(TiXmlElement *Root, const CString& Name, const CString& Value);
-  void Write(TiXmlElement *Root, const CString& Name, const bool Value);
+  void Read(const Xml::XMLElement *Root, const CString& Name, CString& Value);
+  void Read(const Xml::XMLElement *Root, const CString& Name, bool& Value);
+  void Write(Xml::XMLElement *Root, const CString& Name, const CString& Value);
+  void Write(Xml::XMLElement *Root, const CString& Name, const bool Value);
  public:
   CPlatform::OS_Type OS(void) const { return m_Platform; }
   CString Alias(void) const { return m_Alias; }
@@ -81,8 +81,8 @@ class CToolChain
   virtual void Clear(void);
   virtual void Reset(const CPlatform::OS_Type OS);
   virtual bool Supports(const CPlatform::OS_Type OS) const;
-  virtual void Read(const TiXmlElement *ToolChainRoot);
-  virtual void Write(TiXmlElement *ToolChainRoot);
+  virtual void Read(const Xml::XMLElement *ToolChainRoot);
+  virtual void Write(Xml::XMLElement *ToolChainRoot);
   virtual void Show(void);
   size_t ToolsCount(const CBuildTool::ToolType Type = CBuildTool::btOther);
   CBuildTool *GetBuildTool(const size_t index, const CBuildTool::ToolType Type = CBuildTool::btOther);
@@ -161,8 +161,8 @@ class CToolChainSet
   void AddDefault(void);
   CToolChain *Add(const CPlatform::OS_Type OS, const CString& Alias);
   void Remove(const CPlatform::OS_Type OS, const CString& Alias);
-  void Read(const TiXmlElement *ConfigRoot);
-  void Write(TiXmlElement *ConfigRoot);
+  void Read(const Xml::XMLElement *ConfigRoot);
+  void Write(Xml::XMLElement *ConfigRoot);
   //bool Load(const CString& FileName);
   //bool Save(const CString& FileName);
   void Show(void);

@@ -114,14 +114,14 @@ class CPlatform
   CString BaseLibraryName(const CString& Name, const CString& Ext) const;
   //CString (void) const { return m_; }
  private:
-  void Read(const TiXmlElement *Root, const CString& Name, CString& Value);
-  void Write(TiXmlElement *Root, const CString& Name, const CString& Value);
+  void Read(const Xml::XMLElement *Root, const CString& Name, CString& Value);
+  void Write(Xml::XMLElement *Root, const CString& Name, const CString& Value);
  public:
   void Assign(const CPlatform& Platform);
   void Clear(void);
   void Reset(const CPlatform::OS_Type OS);
-  void Read(const TiXmlElement *PlatformRoot);
-  void Write(TiXmlElement *PlatformRoot);
+  void Read(const Xml::XMLElement *PlatformRoot);
+  void Write(Xml::XMLElement *PlatformRoot);
   void Show(void);
   CPlatform& operator =(const CPlatform& Platform);
  public:
@@ -145,8 +145,8 @@ class CPlatformSet
   void AddDefault(void);
   //CPlatform *Add(const CPlatform::OS_Type OS);
   //void Remove(const CPlatform::OS_Type OS);
-  void Read(const TiXmlElement *ConfigRoot);
-  void Write(TiXmlElement *ConfigRoot);
+  void Read(const Xml::XMLElement *ConfigRoot);
+  void Write(Xml::XMLElement *ConfigRoot);
   //bool Load(const CString& FileName);
   //bool Save(const CString& FileName);
   void Show(void);

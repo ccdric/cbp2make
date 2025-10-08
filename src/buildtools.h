@@ -62,10 +62,10 @@ class CBuildTool
   bool m_NeedFullPath;
   bool m_NeedUnixPath;
  protected:
-  void Read(const TiXmlElement *Root, const CString& Name, CString& Value);
-  void Read(const TiXmlElement *Root, const CString& Name, bool& Value);
-  void Write(TiXmlElement *Root, const CString& Name, const CString& Value);
-  void Write(TiXmlElement *Root, const CString& Name, const bool Value);
+  void Read(const Xml::XMLElement *Root, const CString& Name, CString& Value);
+  void Read(const Xml::XMLElement *Root, const CString& Name, bool& Value);
+  void Write(Xml::XMLElement *Root, const CString& Name, const CString& Value);
+  void Write(Xml::XMLElement *Root, const CString& Name, const bool Value);
  public:
   static ToolType Type(const CString& Name);
   static CString TypeName(const ToolType Type);
@@ -89,8 +89,8 @@ class CBuildTool
   virtual void Clear(void);
   virtual void Reset(const CPlatform::OS_Type OS);
   virtual bool Supports(const CPlatform::OS_Type OS);
-  virtual void Read(const TiXmlElement *BuildToolRoot);
-  virtual void Write(TiXmlElement *BuildToolRoot);
+  virtual void Read(const Xml::XMLElement *BuildToolRoot);
+  virtual void Write(Xml::XMLElement *BuildToolRoot);
   virtual void Show(void);
  public:
   CBuildTool(void);
@@ -107,8 +107,8 @@ class CPreprocessor: public CBuildTool
   CString m_DefineSwitch;
  public:
   virtual CPreprocessor *CreateInstance(void);
-  virtual void Read(const TiXmlElement *BuildToolRoot);
-  virtual void Write(TiXmlElement *BuildToolRoot);
+  virtual void Read(const Xml::XMLElement *BuildToolRoot);
+  virtual void Write(Xml::XMLElement *BuildToolRoot);
   virtual void Show(void);
  public:
   CPreprocessor(void);
@@ -129,8 +129,8 @@ class CCompiler: public CBuildTool
  public:
   virtual CIncludeSearchFilter *IncludeSearchFilter(void) const { return 0; }
   virtual CCompiler *CreateInstance(void);
-  virtual void Read(const TiXmlElement *BuildToolRoot);
-  virtual void Write(TiXmlElement *BuildToolRoot);
+  virtual void Read(const Xml::XMLElement *BuildToolRoot);
+  virtual void Write(Xml::XMLElement *BuildToolRoot);
   virtual void Show(void);
  public:
   CCompiler(void);
@@ -182,8 +182,8 @@ class CLinker: public CBuildTool
   bool& NeedFlatObjects(void) { return m_NeedFlatObjects; }
  public:
   virtual CLinker *CreateInstance(void);
-  virtual void Read(const TiXmlElement *BuildToolRoot);
-  virtual void Write(TiXmlElement *BuildToolRoot);
+  virtual void Read(const Xml::XMLElement *BuildToolRoot);
+  virtual void Write(Xml::XMLElement *BuildToolRoot);
   virtual void Show(void);
  public:
   CLinker(void);
@@ -232,8 +232,8 @@ class CExecutableLinker: public CLinker
  public:
   virtual CExecutableLinker *CreateInstance(void);
   CString OptionWinGUI(void) const { return m_Option_WinGUI; }
-  virtual void Read(const TiXmlElement *BuildToolRoot);
-  virtual void Write(TiXmlElement *BuildToolRoot);
+  virtual void Read(const Xml::XMLElement *BuildToolRoot);
+  virtual void Write(Xml::XMLElement *BuildToolRoot);
   virtual void Show(void);
  public:
   CExecutableLinker(void);
@@ -246,8 +246,8 @@ class CDependencyGenerator: public CBuildTool
  protected:
  public:
   virtual CDependencyGenerator *CreateInstance(void);
-  virtual void Read(const TiXmlElement *BuildToolRoot);
-  virtual void Write(TiXmlElement *BuildToolRoot);
+  virtual void Read(const Xml::XMLElement *BuildToolRoot);
+  virtual void Write(Xml::XMLElement *BuildToolRoot);
   virtual void Show(void);
  public:
   CDependencyGenerator(void);
@@ -260,8 +260,8 @@ class CBuildManager: public CBuildTool
  protected:
  public:
   virtual CBuildManager *CreateInstance(void);
-  virtual void Read(const TiXmlElement *BuildToolRoot);
-  virtual void Write(TiXmlElement *BuildToolRoot);
+  virtual void Read(const Xml::XMLElement *BuildToolRoot);
+  virtual void Write(Xml::XMLElement *BuildToolRoot);
   virtual void Show(void);
  public:
   CBuildManager(void);

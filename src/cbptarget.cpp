@@ -364,14 +364,14 @@ void CBuildTarget::Clear(void)
  m_LCName.Clear();
 }
 
-void CBuildTarget::Read(const TiXmlElement *TargetRoot)
+void CBuildTarget::Read(const Xml::XMLElement *TargetRoot)
 {
  char *value = 0;
  if ((value = (char *)TargetRoot->Attribute("title"))) m_Title = value;
- TiXmlNode *_option = (TiXmlNode *)TargetRoot->FirstChildElement("Option");
+ Xml::XMLNode *_option = (Xml::XMLNode *)TargetRoot->FirstChildElement("Option");
  while (0!=_option)
  {
-  TiXmlElement* option = _option->ToElement();
+  Xml::XMLElement* option = _option->ToElement();
   if (0!=option)
   {
    char *value = 0;
@@ -442,13 +442,13 @@ void CBuildTarget::Read(const TiXmlElement *TargetRoot)
   }
   _option = _option->NextSibling();
  } // option
- TiXmlNode *_compiler = (TiXmlNode *)TargetRoot->FirstChildElement("Compiler");
+ Xml::XMLNode *_compiler = (Xml::XMLNode *)TargetRoot->FirstChildElement("Compiler");
  if (0!=_compiler)
  {
-  TiXmlNode *_option = (TiXmlNode *)_compiler->FirstChildElement("Add");
+  Xml::XMLNode *_option = (Xml::XMLNode *)_compiler->FirstChildElement("Add");
   while (0!=_option)
   {
-   TiXmlElement* option = _option->ToElement();
+   Xml::XMLElement* option = _option->ToElement();
    if (0!=option)
    {
     char *value = 0;
@@ -464,13 +464,13 @@ void CBuildTarget::Read(const TiXmlElement *TargetRoot)
    _option = _option->NextSibling();
   } // option
  } // compiler
- TiXmlNode *_res_compiler = (TiXmlNode *)TargetRoot->FirstChildElement("ResourceCompiler");
+ Xml::XMLNode *_res_compiler = (Xml::XMLNode *)TargetRoot->FirstChildElement("ResourceCompiler");
  if (0!=_res_compiler)
  {
-  TiXmlNode *_option = (TiXmlNode *)_res_compiler->FirstChildElement("Add");
+  Xml::XMLNode *_option = (Xml::XMLNode *)_res_compiler->FirstChildElement("Add");
   while (0!=_option)
   {
-   TiXmlElement* option = _option->ToElement();
+   Xml::XMLElement* option = _option->ToElement();
    if (0!=option)
    {
     char *value = 0;
@@ -486,13 +486,13 @@ void CBuildTarget::Read(const TiXmlElement *TargetRoot)
    _option = _option->NextSibling();
   } // option
  } // resource compiler
- TiXmlNode *_linker = (TiXmlNode *)TargetRoot->FirstChildElement("Linker");
+ Xml::XMLNode *_linker = (Xml::XMLNode *)TargetRoot->FirstChildElement("Linker");
  if (0!=_linker)
  {
-  TiXmlNode *_option = (TiXmlNode *)_linker->FirstChildElement("Add");
+  Xml::XMLNode *_option = (Xml::XMLNode *)_linker->FirstChildElement("Add");
   while (0!=_option)
   {
-   TiXmlElement* option = _option->ToElement();
+   Xml::XMLElement* option = _option->ToElement();
    if (0!=option)
    {
     if (strcmp(option->Value(),"Add")) break;
@@ -513,13 +513,13 @@ void CBuildTarget::Read(const TiXmlElement *TargetRoot)
    _option = _option->NextSibling();
   } // option
  } // linker
- TiXmlNode *_extra_cmd = (TiXmlNode *)TargetRoot->FirstChildElement("ExtraCommands");
+ Xml::XMLNode *_extra_cmd = (Xml::XMLNode *)TargetRoot->FirstChildElement("ExtraCommands");
  if (0!=_extra_cmd)
  {
-  TiXmlNode *_option = (TiXmlNode *)_extra_cmd->FirstChildElement("Add");
+  Xml::XMLNode *_option = (Xml::XMLNode *)_extra_cmd->FirstChildElement("Add");
   while (0!=_option)
   {
-   TiXmlElement* option = _option->ToElement();
+   Xml::XMLElement* option = _option->ToElement();
    if (0!=option)
    {
     if (strcmp(option->Value(),"Add")) break;
@@ -535,10 +535,10 @@ void CBuildTarget::Read(const TiXmlElement *TargetRoot)
    }
    _option = _option->NextSibling();
   } // option
-  _option = (TiXmlNode *)_extra_cmd->FirstChildElement("Mode");
+  _option = (Xml::XMLNode *)_extra_cmd->FirstChildElement("Mode");
   while (0!=_option)
   {
-   TiXmlElement* option = _option->ToElement();
+   Xml::XMLElement* option = _option->ToElement();
    if (0!=option)
    {
     if (strcmp(option->Value(),"Mode")) break;
@@ -650,7 +650,7 @@ void CVirtualTarget::Clear(void)
  m_LCName.Clear();
 }
 
-void CVirtualTarget::Read(const TiXmlElement *TargetRoot)
+void CVirtualTarget::Read(const Xml::XMLElement *TargetRoot)
 {
  char *value = 0;
  if ((value = (char *)TargetRoot->Attribute("alias")))
