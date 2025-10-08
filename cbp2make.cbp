@@ -62,7 +62,7 @@
 			<Add directory="src" />
 		</Compiler>
 		<Linker>
-			<Add library="tinyxml" />
+			<Add library="tinyxml2" />
 		</Linker>
 		<Unit filename="lib/doc/macros.dox">
 			<Option target="Doxygen" />
@@ -308,6 +308,7 @@
 			<Option target="Release" />
 			<Option target="Profile" />
 		</Unit>
+		<Unit filename="src/tinyXml2Port.h" />
 		<Unit filename="src/toolchains.cpp">
 			<Option target="Debug" />
 			<Option target="Release" />

@@ -1,0 +1,4 @@
+==> FirstChild(char*) --> FirstChildElement(char*)
+==> noeudIter = parent->IterateChildren(noeudIter) --> noeudIter = neudIter.NextSibling()
+==> TiXmlElement *option = new TiXmlElement("option"); Root->LinkEndChild(option); --> TiXmlElement *option = Root->InsertNewChildElement("option");
+

@@ -27,7 +27,7 @@
 #include "cbhelper.h"
 //------------------------------------------------------------------------------
 
-class TiXmlElement;
+//class TiXmlElement;
 
 class CCodeBlocksBuildConfig
 {

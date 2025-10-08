@@ -26,7 +26,7 @@
 #include "depsearch.h"
 //------------------------------------------------------------------------------
 
-class TiXmlElement;
+//class TiXmlElement;
 
 class CBuildTool
 {

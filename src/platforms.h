@@ -22,13 +22,14 @@
 //------------------------------------------------------------------------------
 #include "stlstrings.h"
 #include "cbhelper.h"
+#include "tinyXml2Port.h"
 //------------------------------------------------------------------------------
 
 static const CString STR_UNIX     = "Unix";
 static const CString STR_WINDOWS  = "Windows";
 static const CString STR_MAC      = "Mac";
 
-class TiXmlElement;
+//class TiXmlElement;
 class CPlatformSet;
 
 class CPlatform

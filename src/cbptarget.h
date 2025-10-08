@@ -22,10 +22,11 @@
 //------------------------------------------------------------------------------
 #include "stlstrings.h"
 #include "platforms.h"
+#include "tinyXml2Port.h"
 //------------------------------------------------------------------------------
 
-class TiXmlNode;
-class TiXmlElement;
+//class TiXmlNode;
+//class TiXmlElement;
 class CCodeBlocksProject;
 
 class CBuildTarget

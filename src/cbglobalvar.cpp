@@ -19,7 +19,6 @@
 //------------------------------------------------------------------------------
 #include <iostream>
 //------------------------------------------------------------------------------
-#include "tinyxml.h"
 #include "stlfutils.h"
 #include "cbglobalvar.h"
 #include "cbhelper.h"
@@ -214,7 +213,7 @@ void CGlobalVariable::Read(const TiXmlElement *GlobalVariableRoot)
  {
   m_Description = value;
  }
- const TiXmlNode *_built_in = GlobalVariableRoot->FirstChild("builtin");
+ const TiXmlNode *_built_in = GlobalVariableRoot->FirstChildElement("builtin");
  if (0!=_built_in)
  {
   TiXmlElement *built_in = (TiXmlElement *)_built_in->ToElement();
@@ -252,13 +251,13 @@ void CGlobalVariable::Read(const TiXmlElement *GlobalVariableRoot)
    */
   } // built_in
  } // _built_in
- const TiXmlNode *_user = GlobalVariableRoot->FirstChild("user");
+ const TiXmlNode *_user = GlobalVariableRoot->FirstChildElement("user");
  if (0!=_user)
  {
   TiXmlElement *user = (TiXmlElement *)_user->ToElement();
   if (0!=user)
   {
-   TiXmlNode *_field = user->FirstChild("field");
+   TiXmlNode *_field = user->FirstChildElement("field");
    while (0!=_field)
    {
     TiXmlElement *field = (TiXmlElement *)_field->ToElement();
@@ -282,7 +281,7 @@ void CGlobalVariable::Read(const TiXmlElement *GlobalVariableRoot)
      }
      */
     }
-    _field = user->IterateChildren(_field);
+    _field = user->NextSibling();
    }
   } // user
  } // _user
@@ -292,7 +291,7 @@ void CGlobalVariable::Write(TiXmlElement *GlobalVariableRoot)
 {
  GlobalVariableRoot->SetAttribute("name",m_Name.GetCString());
  GlobalVariableRoot->SetAttribute("description",m_Description.GetCString());
-	TiXmlElement *built_in = new TiXmlElement("builtin");
+	TiXmlElement *built_in = GlobalVariableRoot->InsertNewChildElement("builtin");
 	//built_in->SetAttribute("name",m_Name.GetCString());
 	built_in->SetAttribute("base",m_Base.GetCString());
 	built_in->SetAttribute("include",m_Include.GetCString());
@@ -301,16 +300,16 @@ void CGlobalVariable::Write(TiXmlElement *GlobalVariableRoot)
 	built_in->SetAttribute("cflags",m_Cflags.GetCString());
 	built_in->SetAttribute("lflags",m_Lflags.GetCString());
 	//built_in->SetAttribute("",m_.GetCString());
- GlobalVariableRoot->LinkEndChild(built_in);
- TiXmlElement *fields = new TiXmlElement("user");
- GlobalVariableRoot->LinkEndChild(fields);
+// GlobalVariableRoot->LinkEndChild(built_in);
+ TiXmlElement *fields = GlobalVariableRoot->InsertNewChildElement("user");
+// GlobalVariableRoot->LinkEndChild(fields);
  for (int i = 0, n = m_Fields.GetCount(); i < n; i++)
  {
   CVariable& v = m_Fields.Variable(i);
-  TiXmlElement *field = new TiXmlElement("field");
+  TiXmlElement *field = fields->InsertNewChildElement("field");
   field->SetAttribute("name",v.GetName().GetCString());
   field->SetAttribute("value",v.GetString().GetCString());
-  fields->LinkEndChild(field);
+//  fields->LinkEndChild(field);
  }
 }
 
@@ -406,7 +405,7 @@ void CGlobalVariableSet::Read(const TiXmlElement *GlobalVariableSetRoot)
  {
   m_Name = value;
  }
- TiXmlNode *_v_root = (TiXmlNode *)GlobalVariableSetRoot->FirstChild("variable");
+ TiXmlNode *_v_root = (TiXmlNode *)GlobalVariableSetRoot->FirstChildElement("variable");
  while (0!=_v_root)
  {
   TiXmlElement *v_root = _v_root->ToElement();
@@ -416,7 +415,7 @@ void CGlobalVariableSet::Read(const TiXmlElement *GlobalVariableSetRoot)
    v->Read(v_root);
    m_Variables.push_back(v);
   }
-  _v_root = (TiXmlNode *)GlobalVariableSetRoot->IterateChildren(_v_root);
+  _v_root = _v_root->NextSibling();
  }
 }
 
@@ -426,10 +425,10 @@ void CGlobalVariableSet::Write(TiXmlElement *GlobalVariableSetRoot)
 	for (size_t i = 0, n = m_Variables.size(); i < n; i++)
 	{
 	 CGlobalVariable *v = m_Variables[i];
-	 TiXmlElement *v_root = new TiXmlElement("variable");
+	 TiXmlElement *v_root = GlobalVariableSetRoot->InsertNewChildElement("variable");
 	 v_root->SetAttribute("name",m_Name.GetCString());
 	 v->Write(v_root);
-	 GlobalVariableSetRoot->LinkEndChild(v_root);
+//	 GlobalVariableSetRoot->LinkEndChild(v_root);
 	}
 }
 
@@ -520,7 +519,7 @@ void CGlobalVariableConfig::Remove(const CString& Name)
 
 void CGlobalVariableConfig::Read(const TiXmlElement *GlobalVariableConfigRoot)
 {
- TiXmlNode *_vset_root = (TiXmlNode *)GlobalVariableConfigRoot->FirstChild("variableset");
+ TiXmlNode *_vset_root = (TiXmlNode *)GlobalVariableConfigRoot->FirstChildElement("variableset");
  while (0!=_vset_root)
  {
   TiXmlElement *vset_root = _vset_root->ToElement();
@@ -543,7 +542,7 @@ void CGlobalVariableConfig::Read(const TiXmlElement *GlobalVariableConfigRoot)
     m_VariableSets.push_back(vset);
    }
   }
-  _vset_root = (TiXmlNode *)GlobalVariableConfigRoot->IterateChildren(_vset_root);
+  _vset_root = _vset_root->NextSibling();
  }
  AddDefault();
 }
@@ -553,9 +552,9 @@ void CGlobalVariableConfig::Write(TiXmlElement *GlobalVariableConfigRoot)
 	for (size_t i = 0, n = m_VariableSets.size(); i < n; i++)
 	{
 	 CGlobalVariableSet *vset = m_VariableSets[i];
-	 TiXmlElement *vset_root = new TiXmlElement("variableset");
+	 TiXmlElement *vset_root = GlobalVariableConfigRoot->InsertNewChildElement("variableset");
 	 vset->Write(vset_root);
-	 GlobalVariableConfigRoot->LinkEndChild(vset_root);
+//	 GlobalVariableConfigRoot->LinkEndChild(vset_root);
 	}
 }
 

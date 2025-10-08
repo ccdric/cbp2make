@@ -22,7 +22,6 @@
 #include "buildtools.h"
 #include "stlconvert.h"
 #include "cbhelper.h"
-#include "tinyxml.h"
 //------------------------------------------------------------------------------
 
 CBuildTool::CBuildTool(void)
@@ -173,7 +172,7 @@ bool CBuildTool::Supports(const CPlatform::OS_Type OS)
 
 void CBuildTool::Read(const TiXmlElement *Root, const CString& Name, CString& Value)
 {
- TiXmlNode *_option = (TiXmlNode *)Root->FirstChild("option");
+ TiXmlNode *_option = (TiXmlNode *)Root->FirstChildElement("option");
  while (0!=_option)
  {
   TiXmlElement* option = _option->ToElement();
@@ -187,7 +186,7 @@ void CBuildTool::Read(const TiXmlElement *Root, const CString& Name, CString& Va
     break;
    }
   }
-  _option = (TiXmlNode *)Root->IterateChildren(_option);
+  _option = _option->NextSibling();
  } // option
 }
 
@@ -232,16 +231,20 @@ void CBuildTool::Read(const TiXmlElement *BuildToolRoot)
 
 void CBuildTool::Write(TiXmlElement *Root, const CString& Name, const CString& Value)
 {
-	TiXmlElement *option = new TiXmlElement("option");
+    // old tiny1
+//	TiXmlElement *option = new TiXmlElement("option");
+//	option->SetAttribute(Name.GetCString(),Value.GetCString());
+//	Root->LinkEndChild(option);
+	// refacto tiny2
+	TiXmlElement *option = Root->InsertNewChildElement("option");
 	option->SetAttribute(Name.GetCString(),Value.GetCString());
-	Root->LinkEndChild(option);
 }
 
 void CBuildTool::Write(TiXmlElement *Root, const CString& Name, const bool Value)
 {
-	TiXmlElement *option = new TiXmlElement("option");
+	TiXmlElement *option = Root->InsertNewChildElement("option");
 	option->SetAttribute(Name.GetCString(),Value);
-	Root->LinkEndChild(option);
+//	Root->LinkEndChild(option);
 }
 
 void CBuildTool::Write(TiXmlElement *BuildToolRoot)

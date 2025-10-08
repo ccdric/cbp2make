@@ -29,7 +29,6 @@
 #include "stlconvert.h"
 #include "stlfutils.h"
 #include "depsearch.h"
-#include "tinyxml2.h"
 //------------------------------------------------------------------------------
 
 CCodeBlocksProject::CCodeBlocksProject(void)
@@ -80,7 +79,7 @@ void CCodeBlocksProject::Clear(void)
 
 void CCodeBlocksProject::Read(const TiXmlElement *ProjectRoot)
 {
- const TiXmlNode *_version = ProjectRoot->FirstChild("FileVersion");
+ const TiXmlNode *_version = ProjectRoot->FirstChildElement("FileVersion");
  if (0!=_version)
  {
   const TiXmlElement *version = _version->ToElement();
@@ -89,10 +88,10 @@ void CCodeBlocksProject::Read(const TiXmlElement *ProjectRoot)
    version->QueryIntAttribute("major",&m_VersionMajor);
    version->QueryIntAttribute("minor",&m_VersionMinor);
  }} // file version
- const TiXmlNode *_project = ProjectRoot->FirstChild("Project");
+ const TiXmlNode *_project = ProjectRoot->FirstChildElement("Project");
  if (0!=_project)
  {
-  TiXmlNode *_option = (TiXmlNode *)_project->FirstChild("Option");
+  TiXmlNode *_option = (TiXmlNode *)_project->FirstChildElement("Option");
   while (0!=_option)
   {
    TiXmlElement* option = _option->ToElement();
@@ -116,12 +115,12 @@ void CCodeBlocksProject::Read(const TiXmlElement *ProjectRoot)
      m_ExtendedObjectNames = StringToBoolean(value);
     }
    }
-   _option = (TiXmlNode *)_project->IterateChildren(_option);
+   _option = _option->NextSibling();
   } // option
-  TiXmlNode *_build = (TiXmlNode *)_project->FirstChild("Build");
+  TiXmlNode *_build = (TiXmlNode *)_project->FirstChildElement("Build");
   if (0!=_build)
   {
-   TiXmlNode *_target = (TiXmlNode *)_build->FirstChild("Target");
+   TiXmlNode *_target = (TiXmlNode *)_build->FirstChildElement("Target");
    while (0!=_target)
    {
     TiXmlElement* target = _target->ToElement();
@@ -132,15 +131,15 @@ void CCodeBlocksProject::Read(const TiXmlElement *ProjectRoot)
      build_target->Read(target);
      m_BuildTargets.push_back(build_target);
     }
-    _target = (TiXmlNode *)_build->IterateChildren(_target);
+    _target = _target->NextSibling();
    } // target
-   TiXmlNode *_env = (TiXmlNode *)_build->FirstChild("Environment");
+   TiXmlNode *_env = (TiXmlNode *)_build->FirstChildElement("Environment");
    if (0!=_env)
    {
     TiXmlElement* env = _env->ToElement();
     if (0!=env)
     {
-     TiXmlNode *_var = (TiXmlNode *)_env->FirstChild("Variable");
+     TiXmlNode *_var = (TiXmlNode *)_env->FirstChildElement("Variable");
      while (0!=_var)
      {
       TiXmlElement* var = _var->ToElement();
@@ -158,18 +157,18 @@ void CCodeBlocksProject::Read(const TiXmlElement *ProjectRoot)
        }
        m_Environment.InsertStringVariable(env_name,env_value);
       }
-      _var = (TiXmlNode *)_env->IterateChildren(_var);
+      _var = _var->NextSibling();
      }
     } // variable
    } // environment
   } // build
-  TiXmlNode *_vtarget = (TiXmlNode *)_project->FirstChild("VirtualTargets");
+  TiXmlNode *_vtarget = (TiXmlNode *)_project->FirstChildElement("VirtualTargets");
   if (0!=_vtarget)
   {
    TiXmlElement *vtarget = _vtarget->ToElement();
    if (0!=vtarget)
    {
-    TiXmlNode *_option = (TiXmlNode *)_vtarget->FirstChild("Add");
+    TiXmlNode *_option = (TiXmlNode *)_vtarget->FirstChildElement("Add");
     while (0!=_option)
     {
      TiXmlElement* option = _option->ToElement();
@@ -179,14 +178,14 @@ void CCodeBlocksProject::Read(const TiXmlElement *ProjectRoot)
       v_target->Read(option);
       m_VirtualTargets.push_back(v_target);
      }
-     _option = (TiXmlNode *)_vtarget->IterateChildren(_option);
+     _option = _option->NextSibling();
     } // option
    }
   } // vtargets
-  TiXmlNode *_compiler = (TiXmlNode *)_project->FirstChild("Compiler");
+  TiXmlNode *_compiler = (TiXmlNode *)_project->FirstChildElement("Compiler");
   if (0!=_compiler)
   {
-   TiXmlNode *_option = (TiXmlNode *)_compiler->FirstChild("Add");
+   TiXmlNode *_option = (TiXmlNode *)_compiler->FirstChildElement("Add");
    while (0!=_option)
    {
     TiXmlElement* option = _option->ToElement();
@@ -202,13 +201,13 @@ void CCodeBlocksProject::Read(const TiXmlElement *ProjectRoot)
       m_CompilerDirectories.Insert(value);
      }
     }
-    _option = (TiXmlNode *)_compiler->IterateChildren(_option);
+    _option = _option->NextSibling();
    } // option
   } // compiler
-  TiXmlNode *_res_compiler = (TiXmlNode *)_project->FirstChild("ResourceCompiler");
+  TiXmlNode *_res_compiler = (TiXmlNode *)_project->FirstChildElement("ResourceCompiler");
   if (0!=_res_compiler)
   {
-   TiXmlNode *_option = (TiXmlNode *)_res_compiler->FirstChild("Add");
+   TiXmlNode *_option = (TiXmlNode *)_res_compiler->FirstChildElement("Add");
    while (0!=_option)
    {
     TiXmlElement* option = _option->ToElement();
@@ -224,13 +223,13 @@ void CCodeBlocksProject::Read(const TiXmlElement *ProjectRoot)
       m_ResourceCompilerDirectories.Insert(value);
      }
     }
-    _option = (TiXmlNode *)_res_compiler->IterateChildren(_option);
+    _option = _option->NextSibling();
    } // option
   } // resource compiler
-  TiXmlNode *_linker = (TiXmlNode *)_project->FirstChild("Linker");
+  TiXmlNode *_linker = (TiXmlNode *)_project->FirstChildElement("Linker");
   if (0!=_linker)
   {
-   TiXmlNode *_option = (TiXmlNode *)_linker->FirstChild("Add");
+   TiXmlNode *_option = (TiXmlNode *)_linker->FirstChildElement("Add");
    while (0!=_option)
    {
     TiXmlElement* option = _option->ToElement();
@@ -250,13 +249,13 @@ void CCodeBlocksProject::Read(const TiXmlElement *ProjectRoot)
       m_LinkerLibraries.Insert(value);
      }
     }
-    _option = (TiXmlNode *)_linker->IterateChildren(_option);
+    _option = _option->NextSibling();
    } // option
   } // linker
-  TiXmlNode *_extra_cmd = (TiXmlNode *)_project->FirstChild("ExtraCommands");
+  TiXmlNode *_extra_cmd = (TiXmlNode *)_project->FirstChildElement("ExtraCommands");
   if (0!=_extra_cmd)
   {
-   TiXmlNode *_option = (TiXmlNode *)_extra_cmd->FirstChild("Add");
+   TiXmlNode *_option = (TiXmlNode *)_extra_cmd->FirstChildElement("Add");
    while (0!=_option)
    {
     TiXmlElement* option = _option->ToElement();
@@ -273,9 +272,9 @@ void CCodeBlocksProject::Read(const TiXmlElement *ProjectRoot)
       m_AfterBuildCommands.Insert(value);
      }
     }
-    _option = (TiXmlNode *)_extra_cmd->IterateChildren(_option);
+    _option = _option->NextSibling();
    } // option
-   _option = (TiXmlNode *)_extra_cmd->FirstChild("Mode");
+   _option = (TiXmlNode *)_extra_cmd->FirstChildElement("Mode");
    while (0!=_option)
    {
     TiXmlElement* option = _option->ToElement();
@@ -292,10 +291,10 @@ void CCodeBlocksProject::Read(const TiXmlElement *ProjectRoot)
       m_ForceAfterBuildCommands = (strcmp(value,"always")==0);
      }
     }
-    _option = (TiXmlNode *)_extra_cmd->IterateChildren(_option);
+    _option = _option->NextSibling();
    } // option
   } // extra commands
-  TiXmlNode *_unit = (TiXmlNode *)_project->FirstChild("Unit");
+  TiXmlNode *_unit = (TiXmlNode *)_project->FirstChildElement("Unit");
   while (0!=_unit)
   {
    TiXmlElement* unit = _unit->ToElement();
@@ -306,7 +305,7 @@ void CCodeBlocksProject::Read(const TiXmlElement *ProjectRoot)
     build_unit->Read(unit);
     m_Units.push_back(build_unit);
    }
-   _unit = (TiXmlNode *)_project->IterateChildren(_unit);
+   _unit = _unit->NextSibling();
   } // unit
  } // project
  // add default target if project has no targets

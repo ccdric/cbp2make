@@ -23,11 +23,11 @@
 #include "stlstrings.h"
 #include "cbproject.h"
 #include "cbworkspace.h"
-//#include "toolchains.h"
 #include "cbbuildcfg.h"
+#include "tinyXml2Port.h"
 //------------------------------------------------------------------------------
 
-class TiXmlElement;
+//class TiXmlElement;
 
 class CCodeBlocksBuildManager
 {

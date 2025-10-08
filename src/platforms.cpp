@@ -22,7 +22,6 @@
 #include "platforms.h"
 #include "stlconvert.h"
 #include "stlfutils.h"
-#include "tinyxml.h"
 //------------------------------------------------------------------------------
 
 CPlatform::CPlatform(void)
@@ -340,7 +339,7 @@ void CPlatform::Reset(const CPlatform::OS_Type OS)
 
 void CPlatform::Read(const TiXmlElement *Root, const CString& Name, CString& Value)
 {
- TiXmlNode *_command = (TiXmlNode *)Root->FirstChild("command");
+ TiXmlNode *_command = (TiXmlNode *)Root->FirstChildElement("command");
  while (0!=_command)
  {
   TiXmlElement* command = _command->ToElement();
@@ -353,7 +352,7 @@ void CPlatform::Read(const TiXmlElement *Root, const CString& Name, CString& Val
     Value = value;
    }
   }
-  _command = (TiXmlNode *)Root->IterateChildren(_command);
+  _command = _command->NextSibling();
  } // command
 }
 
@@ -423,9 +422,9 @@ void CPlatform::Read(const TiXmlElement *PlatformRoot)
 
 void CPlatform::Write(TiXmlElement *Root, const CString& Name, const CString& Value)
 {
-	TiXmlElement *command = new TiXmlElement("command");
+	TiXmlElement *command = Root->InsertNewChildElement("command");
 	command->SetAttribute(Name.GetCString(),Value.GetCString());
-	Root->LinkEndChild(command);
+//	Root->LinkEndChild(command);
 }
 
 void CPlatform::Write(TiXmlElement *PlatformRoot)
@@ -585,7 +584,7 @@ void CPlatformSet::Remove(const CString& Platform)
 
 void CPlatformSet::Read(const TiXmlElement *ConfigRoot)
 {
- TiXmlNode *_platform = (TiXmlNode *)ConfigRoot->FirstChild("platform");
+ TiXmlNode *_platform = (TiXmlNode *)ConfigRoot->FirstChildElement("platform");
  while (0!=_platform)
  {
   TiXmlElement* platform = _platform->ToElement();
@@ -596,7 +595,7 @@ void CPlatformSet::Read(const TiXmlElement *ConfigRoot)
    p->Read(platform);
    m_Platforms.push_back(p);
   }
-  _platform = (TiXmlNode *)ConfigRoot->IterateChildren(_platform);
+  _platform =_platform->NextSibling();
  } // platform
 }
 
@@ -605,38 +604,11 @@ void CPlatformSet::Write(TiXmlElement *ConfigRoot)
 	for (int i = 0, n = m_Platforms.size(); i < n; i++)
 	{
 	 CPlatform *p = m_Platforms[i];
-	 TiXmlElement *p_root = new TiXmlElement("platform");
+	 TiXmlElement *p_root = ConfigRoot->InsertNewChildElement("platform");
 	 p->Write(p_root);
-	 ConfigRoot->LinkEndChild(p_root);
+//	 ConfigRoot->LinkEndChild(p_root);
 	}
 }
-
-/*
-bool CPlatformSet::Load(const CString& FileName)
-{
- if (m_Locked) return false;
- TiXmlDocument cfg;
- if (!cfg.LoadFile(FileName.GetCString())) return false;
- const TiXmlElement *root = cfg.RootElement();
- if (0==strcmp(root->Value(),"cbp2make"))
- {
-  Read(root);
- } // root
- if (0==m_Platforms.size()) AddDefault();
- return true;
-}
-
-bool CPlatformSet::Save(const CString& FileName)
-{
- TiXmlDocument cfg;
- TiXmlDeclaration *xmld = new TiXmlDeclaration("1.0", "", "");
-	cfg.LinkEndChild(xmld);
-	TiXmlElement *root = new TiXmlElement("cbp2make");
-	cfg.LinkEndChild(root);
-	Write(root);
- return cfg.SaveFile(FileName.GetCString());
-}
-*/
 
 void CPlatformSet::Show(void)
 {

@@ -25,7 +25,6 @@
 #include "cbbuildcfg.h"
 #include "cbhelper.h"
 #include "stlfutils.h"
-#include "tinyxml2.h"
 //------------------------------------------------------------------------------
 
 CWorkspaceUnit::CWorkspaceUnit(void)
@@ -49,7 +48,7 @@ void CWorkspaceUnit::Clear(void)
 void CWorkspaceUnit::Read(const TiXmlElement* UnitRoot)
 {
  m_FileName = UnitRoot->Attribute("filename");
- const TiXmlNode *_depends = UnitRoot->FirstChild("Depends");
+ const TiXmlNode *_depends = UnitRoot->FirstChildElement("Depends");
  while (0!=_depends)
  {
   const TiXmlElement *depends = _depends->ToElement();
@@ -61,7 +60,7 @@ void CWorkspaceUnit::Read(const TiXmlElement* UnitRoot)
     m_Depends.Insert(value);
    }
   }
-  _depends = UnitRoot->IterateChildren(_depends);
+  _depends = _depends->NextSibling();
  }
  m_Depends.RemoveDuplicates();
  //m_Depends.RemoveEmpty();
@@ -169,14 +168,14 @@ void CCodeBlocksWorkspace::Clear()
 
 void CCodeBlocksWorkspace::Read(const TiXmlElement* WorkspaceRoot)
 {
- const TiXmlNode *_workspace = WorkspaceRoot->FirstChild("Workspace");
+ const TiXmlNode *_workspace = WorkspaceRoot->FirstChildElement("Workspace");
  if (0!=_workspace)
  {
   const TiXmlElement *workspace = _workspace->ToElement();
   if (0!=workspace)
   {
    m_Title = workspace->Attribute("title");
-   TiXmlNode *_project = (TiXmlNode *)_workspace->FirstChild("Project");
+   TiXmlNode *_project = (TiXmlNode *)_workspace->FirstChildElement("Project");
    while (0!=_project)
    {
     TiXmlElement* project = _project->ToElement();
@@ -186,7 +185,7 @@ void CCodeBlocksWorkspace::Read(const TiXmlElement* WorkspaceRoot)
      unit->Read(project);
      m_Units.push_back(unit);
     }
-    _project = (TiXmlNode *)_workspace->IterateChildren(_project);
+    _project =_project->NextSibling();
  }}}
 }
 

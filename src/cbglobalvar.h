@@ -22,9 +22,10 @@
 //------------------------------------------------------------------------------
 #include "stlstrings.h"
 #include "stlconfig.h"
+#include "tinyXml2Port.h"
 //------------------------------------------------------------------------------
 
-class TiXmlElement;
+//class TiXmlElement;
 class CGlobalVariableSet;
 
 class CGlobalVariable

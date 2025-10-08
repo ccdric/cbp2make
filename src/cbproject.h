@@ -26,6 +26,7 @@
 //#include "cbpunit.h"
 #include "depsearch.h"
 #include "makefile.h"
+#include "tinyXml2Port.h"
 //------------------------------------------------------------------------------
 
 class CBuildTarget;
@@ -34,7 +35,7 @@ class CBuildUnit;
 class CToolChain;
 class CCodeBlocksBuildConfig;
 
-class TiXmlElement;
+//class TiXmlElement;
 
 class CCodeBlocksProject
 {

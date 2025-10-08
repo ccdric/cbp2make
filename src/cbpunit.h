@@ -22,10 +22,11 @@
 //------------------------------------------------------------------------------
 #include "stlstrings.h"
 #include "cbptarget.h"
+#include "tinyXml2Port.h"
 //------------------------------------------------------------------------------
 
-class TiXmlNode;
-class TiXmlElement;
+//class TiXmlNode;
+//class TiXmlElement;
 class CCodeBlocksProject;
 
 class CUnitWeightComparison;

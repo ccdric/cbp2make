@@ -25,7 +25,7 @@
 #include "buildtools.h"
 //------------------------------------------------------------------------------
 
-class TiXmlElement;
+//class TiXmlElement;
 class CToolChainSet;
 
 class CToolChain

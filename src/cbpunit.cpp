@@ -24,7 +24,6 @@
 #include "cbhelper.h"
 #include "stlconvert.h"
 #include "stlfutils.h"
-#include "tinyxml2.h"
 //------------------------------------------------------------------------------
 
 CBuildUnit::CBuildUnit(void)
@@ -64,7 +63,7 @@ void CBuildUnit::Read(const TiXmlElement *UnitRoot)
  {
   m_FileName = value;
  }
- TiXmlNode *_option = (TiXmlNode *)UnitRoot->FirstChild("Option");
+ TiXmlNode *_option = (TiXmlNode *)UnitRoot->FirstChildElement("Option");
  while (0!=_option)
  {
   TiXmlElement* option = _option->ToElement();
@@ -92,7 +91,7 @@ void CBuildUnit::Read(const TiXmlElement *UnitRoot)
     m_Weight = StringToInteger(value);
    }
   }
-  _option = (TiXmlNode *)UnitRoot->IterateChildren(_option);
+  _option = _option->NextSibling();
  } // option
 }
 

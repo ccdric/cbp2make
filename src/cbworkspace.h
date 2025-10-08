@@ -22,9 +22,10 @@
 //------------------------------------------------------------------------------
 #include "stlstrings.h"
 #include "cbproject.h"
+#include "tinyXml2Port.h"
 //------------------------------------------------------------------------------
 
-class TiXmlElement;
+//class TiXmlElement;
 class CToolChainSet;
 
 class CCodeBlocksWorkspace;

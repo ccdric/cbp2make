@@ -23,7 +23,7 @@
 #include "cbhelper.h"
 #include "stlconvert.h"
 #include "stlfutils.h"
-#include "tinyxml2.h"
+#include "tinyXml2Port.h"
 //------------------------------------------------------------------------------
 
 CBuildTarget::CBuildTarget(void)
@@ -368,7 +368,7 @@ void CBuildTarget::Read(const TiXmlElement *TargetRoot)
 {
  char *value = 0;
  if ((value = (char *)TargetRoot->Attribute("title"))) m_Title = value;
- TiXmlNode *_option = (TiXmlNode *)TargetRoot->FirstChild("Option");
+ TiXmlNode *_option = (TiXmlNode *)TargetRoot->FirstChildElement("Option");
  while (0!=_option)
  {
   TiXmlElement* option = _option->ToElement();
@@ -440,12 +440,12 @@ void CBuildTarget::Read(const TiXmlElement *TargetRoot)
    }
    */
   }
-  _option = (TiXmlNode *)TargetRoot->IterateChildren(_option);
+  _option = _option->NextSibling();
  } // option
- TiXmlNode *_compiler = (TiXmlNode *)TargetRoot->FirstChild("Compiler");
+ TiXmlNode *_compiler = (TiXmlNode *)TargetRoot->FirstChildElement("Compiler");
  if (0!=_compiler)
  {
-  TiXmlNode *_option = (TiXmlNode *)_compiler->FirstChild("Add");
+  TiXmlNode *_option = (TiXmlNode *)_compiler->FirstChildElement("Add");
   while (0!=_option)
   {
    TiXmlElement* option = _option->ToElement();
@@ -461,13 +461,13 @@ void CBuildTarget::Read(const TiXmlElement *TargetRoot)
      m_CompilerDirectories.Insert(value);
     }
    }
-   _option = (TiXmlNode *)_compiler->IterateChildren(_option);
+   _option = _option->NextSibling();
   } // option
  } // compiler
- TiXmlNode *_res_compiler = (TiXmlNode *)TargetRoot->FirstChild("ResourceCompiler");
+ TiXmlNode *_res_compiler = (TiXmlNode *)TargetRoot->FirstChildElement("ResourceCompiler");
  if (0!=_res_compiler)
  {
-  TiXmlNode *_option = (TiXmlNode *)_res_compiler->FirstChild("Add");
+  TiXmlNode *_option = (TiXmlNode *)_res_compiler->FirstChildElement("Add");
   while (0!=_option)
   {
    TiXmlElement* option = _option->ToElement();
@@ -483,13 +483,13 @@ void CBuildTarget::Read(const TiXmlElement *TargetRoot)
      m_ResourceCompilerDirectories.Insert(value);
     }
    }
-   _option = (TiXmlNode *)_res_compiler->IterateChildren(_option);
+   _option = _option->NextSibling();
   } // option
  } // resource compiler
- TiXmlNode *_linker = (TiXmlNode *)TargetRoot->FirstChild("Linker");
+ TiXmlNode *_linker = (TiXmlNode *)TargetRoot->FirstChildElement("Linker");
  if (0!=_linker)
  {
-  TiXmlNode *_option = (TiXmlNode *)_linker->FirstChild("Add");
+  TiXmlNode *_option = (TiXmlNode *)_linker->FirstChildElement("Add");
   while (0!=_option)
   {
    TiXmlElement* option = _option->ToElement();
@@ -510,13 +510,13 @@ void CBuildTarget::Read(const TiXmlElement *TargetRoot)
      m_LinkerLibraries.Insert(value);
     }
    }
-   _option = (TiXmlNode *)_linker->IterateChildren(_option);
+   _option = _option->NextSibling();
   } // option
  } // linker
- TiXmlNode *_extra_cmd = (TiXmlNode *)TargetRoot->FirstChild("ExtraCommands");
+ TiXmlNode *_extra_cmd = (TiXmlNode *)TargetRoot->FirstChildElement("ExtraCommands");
  if (0!=_extra_cmd)
  {
-  TiXmlNode *_option = (TiXmlNode *)_extra_cmd->FirstChild("Add");
+  TiXmlNode *_option = (TiXmlNode *)_extra_cmd->FirstChildElement("Add");
   while (0!=_option)
   {
    TiXmlElement* option = _option->ToElement();
@@ -533,9 +533,9 @@ void CBuildTarget::Read(const TiXmlElement *TargetRoot)
      m_AfterBuildCommands.Insert(value);
     }
    }
-   _option = (TiXmlNode *)_extra_cmd->IterateChildren(_option);
+   _option = _option->NextSibling();
   } // option
-  _option = (TiXmlNode *)_extra_cmd->FirstChild("Mode");
+  _option = (TiXmlNode *)_extra_cmd->FirstChildElement("Mode");
   while (0!=_option)
   {
    TiXmlElement* option = _option->ToElement();
@@ -552,7 +552,7 @@ void CBuildTarget::Read(const TiXmlElement *TargetRoot)
      m_ForceAfterBuildCommands = (strcmp(value,"always")==0);
     }
    }
-   _option = (TiXmlNode *)_extra_cmd->IterateChildren(_option);
+   _option = _option->NextSibling();
   } // option
  } // extra commands
  // decorate target name

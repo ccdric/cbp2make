@@ -21,7 +21,6 @@
 //------------------------------------------------------------------------------
 #include "toolchains.h"
 #include "stlconvert.h"
-#include "tinyxml.h"
 //------------------------------------------------------------------------------
 
 CToolChain::CToolChain(const CString& Alias)
@@ -195,7 +194,7 @@ bool CToolChain::Supports(const CPlatform::OS_Type OS) const
 
 void CToolChain::Read(const TiXmlElement *Root, const CString& Name, CString& Value)
 {
- TiXmlNode *_option = (TiXmlNode *)Root->FirstChild("option");
+ TiXmlNode *_option = (TiXmlNode *)Root->FirstChildElement("option");
  while (0!=_option)
  {
   TiXmlElement* option = _option->ToElement();
@@ -209,7 +208,7 @@ void CToolChain::Read(const TiXmlElement *Root, const CString& Name, CString& Va
     break;
    }
   }
-  _option = (TiXmlNode *)Root->IterateChildren(_option);
+  _option = _option->NextSibling();
  } // option
 }
 
@@ -238,7 +237,7 @@ void CToolChain::Read(const TiXmlElement *ToolChainRoot)
   m_ = value;
  }
  */
- TiXmlNode *_tool_root = (TiXmlNode *)(ToolChainRoot->FirstChild("tool"));
+ TiXmlNode *_tool_root = (TiXmlNode *)(ToolChainRoot->FirstChildElement("tool"));
  while (0!=_tool_root)
  {
   const TiXmlElement *tool_root = _tool_root->ToElement();
@@ -282,22 +281,22 @@ void CToolChain::Read(const TiXmlElement *ToolChainRoot)
     }
    }
   }
-  _tool_root = (TiXmlNode *)(ToolChainRoot->IterateChildren(_tool_root));
+  _tool_root = _tool_root->NextSibling();
  }
 }
 
 void CToolChain::Write(TiXmlElement *Root, const CString& Name, const CString& Value)
 {
-	TiXmlElement *option = new TiXmlElement("option");
+	TiXmlElement *option = Root->InsertNewChildElement("option");
 	option->SetAttribute(Name.GetCString(),Value.GetCString());
-	Root->LinkEndChild(option);
+//	Root->LinkEndChild(option);
 }
 
 void CToolChain::Write(TiXmlElement *Root, const CString& Name, const bool Value)
 {
-	TiXmlElement *option = new TiXmlElement("option");
+	TiXmlElement *option = Root->InsertNewChildElement("option");
 	option->SetAttribute(Name.GetCString(),Value);
-	Root->LinkEndChild(option);
+//	Root->LinkEndChild(option);
 }
 
 void CToolChain::Write(TiXmlElement *ToolChainRoot)
@@ -315,9 +314,9 @@ void CToolChain::Write(TiXmlElement *ToolChainRoot)
   CBuildTool *bt = m_BuildTools[i];
   if (bt->Supports(m_Platform))
 	 {
-	  TiXmlElement *bt_root = new TiXmlElement("tool");
+	  TiXmlElement *bt_root = ToolChainRoot->InsertNewChildElement("tool");
    bt->Write(bt_root);
-   ToolChainRoot->LinkEndChild(bt_root);
+//   ToolChainRoot->LinkEndChild(bt_root);
 	 }
  }
 }
@@ -773,7 +772,7 @@ void CToolChainSet::Remove(const CPlatform::OS_Type OS, const CString& Alias)
 
 void CToolChainSet::Read(const TiXmlElement *ConfigRoot)
 {
- TiXmlNode *_tool_chain = (TiXmlNode *)ConfigRoot->FirstChild("toolchain");
+ TiXmlNode *_tool_chain = (TiXmlNode *)ConfigRoot->FirstChildElement("toolchain");
  while (0!=_tool_chain)
  {
   TiXmlElement* tool_chain = _tool_chain->ToElement();
@@ -808,7 +807,7 @@ void CToolChainSet::Read(const TiXmlElement *ConfigRoot)
     m_ToolChains[tc->OS()].push_back(tc);
    }
   }
-  _tool_chain = (TiXmlNode *)ConfigRoot->IterateChildren(_tool_chain);
+  _tool_chain = _tool_chain->NextSibling();
  } // tool_chain
 }
 
@@ -819,39 +818,13 @@ void CToolChainSet::Write(TiXmlElement *ConfigRoot)
  	for (int j = 0, m = m_ToolChains[i].size(); j < m; j++)
   {
  	 CToolChain *tc = m_ToolChains[i][j];
- 	 TiXmlElement *tc_root = new TiXmlElement("toolchain");
+ 	 TiXmlElement *tc_root = ConfigRoot->InsertNewChildElement("toolchain");
 	  tc->Write(tc_root);
-	  ConfigRoot->LinkEndChild(tc_root);
+//	  ConfigRoot->LinkEndChild(tc_root);
   }
 	}
 }
 
-/*
-bool CToolChainSet::Load(const CString& FileName)
-{
- if (m_Locked) return false;
- TiXmlDocument cfg;
- if (!cfg.LoadFile(FileName.GetCString())) return false;
- const TiXmlElement *root = cfg.RootElement();
- if (0==strcmp(root->Value(),"cbp2make"))
- {
-  Read(root);
- } // root
- if (0==m_ToolChains.size()) AddDefault();
- return true;
-}
-
-bool CToolChainSet::Save(const CString& FileName)
-{
- TiXmlDocument cfg;
- TiXmlDeclaration *xmld = new TiXmlDeclaration("1.0", "", "");
-	cfg.LinkEndChild(xmld);
-	TiXmlElement *root = new TiXmlElement("cbp2make");
-	cfg.LinkEndChild(root);
- Write(root);
- return cfg.SaveFile(FileName.GetCString());
-}
-*/
 
 void CToolChainSet::Show(void)
 {

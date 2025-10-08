@@ -21,7 +21,6 @@
 //------------------------------------------------------------------------------
 #include "stlfutils.h"
 #include "cbbuildmgr.h"
-#include "tinyxml.h"
 //------------------------------------------------------------------------------
 
 CCodeBlocksBuildManager::CCodeBlocksBuildManager(void)
