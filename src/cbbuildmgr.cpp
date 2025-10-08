@@ -41,26 +41,26 @@ void CCodeBlocksBuildManager::Clear(void)
  m_Workspace.Clear();
 }
 
-bool CCodeBlocksBuildManager::LoadProjectOrWorkspace(const CString& FileName)
+Xml::XMLError CCodeBlocksBuildManager::LoadProjectOrWorkspace(const CString& FileName)
 {
- bool result = false;
+ Xml::XMLError result;
  Xml::XMLDocument cbpw;
  result = cbpw.LoadFile(FileName.GetCString());
- if (!result) return false;
+ if (result != Xml::XML_SUCCESS ) return result;
  Clear();
  const Xml::XMLElement *root = cbpw.RootElement();
  if (0==strcmp(root->Value(),"CodeBlocks_project_file"))
  {
   m_Project.Read(root);
   m_ProjectLoaded = true;
-  result = true;
+  result = Xml::XML_SUCCESS;
  }
  else if (0==strcmp(root->Value(),"CodeBlocks_workspace_file"))
  {
   m_Workspace.Read(root);
   m_Workspace.LoadWorkspaceProjects(ExtractFilePath(FileName));
   m_WorkspaceLoaded = true;
-  result = true;
+  result = Xml::XML_SUCCESS;
  }
  return result;
 }

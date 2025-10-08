@@ -659,17 +659,17 @@ CString CProcessingMachine::TargetName(const int FileIndex, const CString& Sourc
 
 bool CProcessingMachine::ProcessFile(const CString& SourceFileName, CString& TargetFileName)
 {
- bool result = false;
+ Xml::XMLError result;
  if (!BeQuiet()) std::cout<<"Loading file '"
                           <<SourceFileName.GetString()<<"': "<<std::flush;
  result = m_BuildManager.LoadProjectOrWorkspace(SourceFileName);
- if (result)
+ if (result == Xml::XML_SUCCESS)
  {
   if (!BeQuiet()) std::cout<<"[DONE]"<<std::endl<<std::flush;
  }
  else
  {
-  if (!BeQuiet()) std::cout<<"[FAILED]"<<std::endl<<std::flush;
+  if (!BeQuiet()) std::cout<<"[FAILED : " << Xml::XMLDocument::ErrorIDToName(result) << "]"<<std::endl<<std::flush;
  }
  //
  if (BeVerbose()) m_BuildManager.Show();

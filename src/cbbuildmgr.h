@@ -43,7 +43,7 @@ class CCodeBlocksBuildManager
   CToolChainSet& ToolChains(void) { return m_Config.ToolChains(); }
   CCodeBlocksBuildConfig& Config(void) { return m_Config; }
   void Clear(void);
-  bool LoadProjectOrWorkspace(const CString& FileName);
+  Xml::XMLError LoadProjectOrWorkspace(const CString& FileName);
   void Show(void);
   void GenerateMakefile(const CString& FileName);
  public:

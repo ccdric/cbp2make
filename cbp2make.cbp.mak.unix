@@ -16,7 +16,7 @@ CFLAGS += -Wall -fexceptions -fno-strict-aliasing -Wno-write-strings
 RCFLAGS += 
 RESINC += 
 LIBDIR += 
-LIB += -ltinyxml
+LIB += -ltinyxml2
 LDFLAGS += 
 
 INC_DEBUG = $(INC)
@@ -322,7 +322,7 @@ clean_profile:
 	rm -rf $(OBJDIR_PROFILE)/src
 	rm -rf $(OBJDIR_PROFILE)/lib
 
-all: debug release
+all: release
 
 PREFIX=usr/
 install:
